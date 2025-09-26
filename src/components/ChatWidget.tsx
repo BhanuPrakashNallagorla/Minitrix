@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, User, Bot, ArrowRight } from 'lucide-react';
 import { retrieveRelevantChunks, generateResponse } from '../data/knowledgeBase';
+import { post } from '../lib/api';
 
 interface Message {
   id: string;
@@ -22,6 +23,8 @@ const ChatWidget = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [leadForm, setLeadForm] = useState<LeadForm>({ name: '', email: '', question: '' });
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
+  const [leadError, setLeadError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const suggestedQuestions = [
@@ -105,22 +108,36 @@ const ChatWidget = () => {
     }, 1500);
   };
 
-  const handleLeadFormSubmit = (e: React.FormEvent) => {
+  const handleLeadFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // In a real implementation, this would send to your CRM/sales system
-    console.log('Lead captured:', leadForm);
-    
-    const confirmationMessage: Message = {
-      id: Date.now().toString(),
-      content: `Thank you, ${leadForm.name}! I've forwarded your information to our team. Someone will reach out to you at ${leadForm.email} within 24 hours to discuss your needs.`,
-      sender: 'bot',
-      timestamp: new Date()
-    };
+    setLeadError(null);
+    if (!leadForm.name || !leadForm.email) {
+      setLeadError('Please provide your name and a valid email.');
+      return;
+    }
+    try {
+      setIsSubmittingLead(true);
+      await post('/api/chat/lead', {
+        name: leadForm.name,
+        email: leadForm.email,
+        question: leadForm.question,
+      });
 
-    setMessages(prev => [...prev, confirmationMessage]);
-    setShowLeadForm(false);
-    setLeadForm({ name: '', email: '', question: '' });
+      const confirmationMessage: Message = {
+        id: Date.now().toString(),
+        content: `Thank you, ${leadForm.name}! I've forwarded your information to our team. Someone will reach out to you at ${leadForm.email} within 24 hours to discuss your needs.`,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, confirmationMessage]);
+      setShowLeadForm(false);
+      setLeadForm({ name: '', email: '', question: '' });
+    } catch (err: any) {
+      setLeadError(err?.data?.errors?.[0]?.msg || err.message || 'Failed to submit lead. Please try again.');
+    } finally {
+      setIsSubmittingLead(false);
+    }
   };
 
   const toggleChat = () => {
@@ -264,12 +281,25 @@ const ChatWidget = () => {
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:border-blue-500 resize-none"
                     rows={2}
                   />
+                  {leadError && (
+                    <div className="text-red-500 text-xs">{leadError}</div>
+                  )}
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 flex items-center justify-center space-x-2"
+                    disabled={isSubmittingLead}
+                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-gray-600 disabled:to-gray-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 flex items-center justify-center space-x-2 disabled:cursor-not-allowed"
                   >
-                    <span>Connect with Sales</span>
-                    <ArrowRight className="h-4 w-4" />
+                    {isSubmittingLead ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Connect with Sales</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
                   </button>
                 </form>
               </div>

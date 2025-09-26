@@ -1,10 +1,12 @@
-
 import { useState, useEffect } from 'react';
+import { post } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
 
   const headlines = [
@@ -14,19 +16,26 @@ const Footer = () => {
     'Ready for 3x Faster Performance?'
   ];
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const emailRegex = /\S+@\S+\.\S+/;
-    
+
     if (!emailRegex.test(email)) {
       setEmailError('Please enter a valid email address');
       return;
     }
-    
+
     setEmailError('');
-    // Handle newsletter subscription
-    console.log('Newsletter subscription:', email);
-    setEmail('');
+    setIsLoading(true);
+    try {
+      await post('/api/newsletter', { email });
+      setIsSubscribed(true);
+      setEmail('');
+    } catch (err: any) {
+      setEmailError(err?.data?.errors?.[0]?.msg || err.message || 'Subscription failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Cycle through headlines
@@ -103,11 +112,18 @@ const Footer = () => {
               aria-describedby={emailError ? 'email-error' : undefined}
               required 
             />
-            <button className="btn-primary" type="submit">Subscribe</button>
+            <button className="btn-primary" type="submit" disabled={isLoading}>
+              {isLoading ? 'Subscribing…' : 'Subscribe'}
+            </button>
           </form>
           {emailError && (
             <div id="email-error" className="footer__error" role="alert">
               {emailError}
+            </div>
+          )}
+          {isSubscribed && !emailError && (
+            <div className="text-green-500 text-sm mt-2" role="status">
+              You are subscribed. Please check your email for confirmation.
             </div>
           )}
           

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { post } from '../../lib/api';
 import { Mail, Check, ArrowRight } from 'lucide-react';
 
 const NewsletterSubscription = () => {
@@ -11,13 +12,15 @@ const NewsletterSubscription = () => {
     if (!email) return;
 
     setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubscribed(true);
-    setIsLoading(false);
-    setEmail('');
+    try {
+      await post('/api/newsletter', { email });
+      setIsSubscribed(true);
+      setEmail('');
+    } catch (err: any) {
+      alert(err?.data?.errors?.[0]?.msg || err.message || 'Subscription failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubscribed) {

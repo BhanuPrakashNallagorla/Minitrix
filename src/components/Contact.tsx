@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, Mail, Phone, MessageSquare } from 'lucide-react';
+import { post } from '../lib/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,17 +11,65 @@ const Contact = () => {
     projectDetails: ''
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    // field-level validation
+    validateField(e.target.name, e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateField = (name: string, value: string) => {
+    let msg = '';
+    if (['fullName', 'company', 'role'].includes(name)) {
+      if (!value || value.trim().length < 2) msg = 'This field is required';
+    }
+    if (name === 'email') {
+      const emailRegex = /\S+@\S+\.[\w-]{2,}/;
+      if (!emailRegex.test(value)) msg = 'Please enter a valid email address';
+    }
+    setErrors(prev => ({ ...prev, [name]: msg }));
+    return msg === '';
+  };
+
+  const validateAll = () => {
+    const result: Record<string, string> = {};
+    result.fullName = formData.fullName.trim().length >= 2 ? '' : 'Full name is required';
+    result.company = formData.company.trim().length >= 2 ? '' : 'Company is required';
+    result.role = formData.role.trim().length >= 2 ? '' : 'Role is required';
+    result.email = /\S+@\S+\.[\w-]{2,}/.test(formData.email) ? '' : 'Valid email is required';
+    setErrors(result);
+    return Object.values(result).every(v => v === '');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission
+    setSubmitMessage(null);
+    if (!validateAll()) return;
+    try {
+      setIsSubmitting(true);
+      const payload = {
+        fullName: formData.fullName,
+        email: formData.email,
+        company: formData.company,
+        role: formData.role,
+        projectDetails: formData.projectDetails,
+      };
+      await post('/api/contact', payload);
+      setSubmitMessage('Thanks! Your request has been received. We will contact you shortly.');
+      setFormData({ fullName: '', email: '', company: '', role: '', projectDetails: '' });
+      setErrors({});
+    } catch (err: any) {
+      const serverError = err?.data?.errors?.[0]?.msg || err.message || 'Submission failed';
+      setSubmitMessage(`Error: ${serverError}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -52,9 +101,14 @@ const Contact = () => {
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      className="input-dark w-full px-4 py-3 rounded-lg font-medium"
+                      className={`input-dark w-full px-4 py-3 rounded-lg font-medium ${
+                        errors.fullName ? 'border-red-500' : formData.fullName ? 'border-green-500' : ''
+                      }`}
                       required
                     />
+                    {errors.fullName && (
+                      <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                    )}
                   </div>
                   
                   <div>
@@ -66,9 +120,14 @@ const Contact = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="input-dark w-full px-4 py-3 rounded-lg font-medium"
+                      className={`input-dark w-full px-4 py-3 rounded-lg font-medium ${
+                        errors.email ? 'border-red-500' : formData.email ? 'border-green-500' : ''
+                      }`}
                       required
                     />
+                    {errors.email && (
+                      <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                    )}
                   </div>
                 </div>
 
@@ -82,9 +141,14 @@ const Contact = () => {
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="input-dark w-full px-4 py-3 rounded-lg font-medium"
+                      className={`input-dark w-full px-4 py-3 rounded-lg font-medium ${
+                        errors.company ? 'border-red-500' : formData.company ? 'border-green-500' : ''
+                      }`}
                       required
                     />
+                    {errors.company && (
+                      <p className="text-red-500 text-sm mt-1">{errors.company}</p>
+                    )}
                   </div>
                   
                   <div>
@@ -96,9 +160,14 @@ const Contact = () => {
                       name="role"
                       value={formData.role}
                       onChange={handleInputChange}
-                      className="input-dark w-full px-4 py-3 rounded-lg font-medium"
+                      className={`input-dark w-full px-4 py-3 rounded-lg font-medium ${
+                        errors.role ? 'border-red-500' : formData.role ? 'border-green-500' : ''
+                      }`}
                       required
                     />
+                    {errors.role && (
+                      <p className="text-red-500 text-sm mt-1">{errors.role}</p>
+                    )}
                   </div>
                 </div>
 
@@ -116,9 +185,24 @@ const Contact = () => {
                   />
                 </div>
 
-                <button className="btn-primary-dark w-full py-4 rounded-lg font-bold text-lg">
-                  <Send className="h-5 w-5 mr-2" />
-                  Get My Custom Quote
+                {submitMessage && (
+                  <div className={`text-sm ${submitMessage.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>
+                    {submitMessage}
+                  </div>
+                )}
+
+                <button disabled={isSubmitting} className="btn-primary-dark w-full py-4 rounded-lg font-bold text-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center">
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-5 w-5 mr-2" />
+                      Get My Custom Quote
+                    </>
+                  )}
                 </button>
               </form>
             </div>

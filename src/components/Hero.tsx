@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { post } from '../lib/api';
 import { TrendingDown, Zap, Shield } from 'lucide-react';
 
 const Hero = () => {
@@ -15,27 +16,74 @@ const Hero = () => {
     additionalInfo: ''
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    validateField(e.target.name, e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateField = (name: string, value: string) => {
+    let msg = '';
+    if (['fullName', 'company', 'role'].includes(name)) {
+      if (!value || value.trim().length < 2) msg = 'This field is required';
+    }
+    if (name === 'email') {
+      const emailRegex = /\S+@\S+\.[\w-]{2,}/;
+      if (!emailRegex.test(value)) msg = 'Please enter a valid email address';
+    }
+    setErrors(prev => ({ ...prev, [name]: msg }));
+    return msg === '';
+  };
+
+  const validateAll = () => {
+    const result: Record<string, string> = {};
+    result.fullName = formData.fullName.trim().length >= 2 ? '' : 'Full name is required';
+    result.company = formData.company.trim().length >= 2 ? '' : 'Company is required';
+    result.role = formData.role.trim().length >= 2 ? '' : 'Role is required';
+    result.email = /\S+@\S+\.[\w-]{2,}/.test(formData.email) ? '' : 'Valid email is required';
+    setErrors(result);
+    return Object.values(result).every(v => v === '');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Hero form submitted:', formData);
-    alert('Thank you for your interest! We will contact you within 2 hours.');
-    // Reset form
-    setFormData({
-      fullName: '',
-      email: '',
-      company: '',
-      role: '',
-      countryName: 'United States',
-      phone: '',
-      additionalInfo: ''
-    });
+    setSubmitMessage(null);
+    if (!validateAll()) return;
+    try {
+      setIsSubmitting(true);
+      const payload = {
+        fullName: formData.fullName,
+        email: formData.email,
+        company: formData.company,
+        role: formData.role,
+        countryName: formData.countryName,
+        phone: formData.phone,
+        additionalInfo: formData.additionalInfo,
+      };
+      await post('/api/contact', payload);
+      setSubmitMessage('Thanks! Your request has been received. We will contact you within 2 hours.');
+      setFormData({
+        fullName: '',
+        email: '',
+        company: '',
+        role: '',
+        countryName: 'United States',
+        phone: '',
+        additionalInfo: ''
+      });
+      setErrors({});
+    } catch (err: any) {
+      const serverError = err?.data?.errors?.[0]?.msg || err.message || 'Submission failed';
+      setSubmitMessage(`Error: ${serverError}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const countriesUnsorted = [
@@ -395,9 +443,12 @@ const Hero = () => {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    className="input-dark w-full px-3 py-3 rounded-lg"
+                    className={`input-dark w-full px-3 py-3 rounded-lg ${
+                      errors.fullName ? 'border-red-500' : formData.fullName ? 'border-green-500' : ''
+                    }`}
                     required
                   />
+                  {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2" style={{color: 'var(--dark-text-secondary)'}}>
@@ -408,9 +459,12 @@ const Hero = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="input-dark w-full px-3 py-3 rounded-lg"
+                    className={`input-dark w-full px-3 py-3 rounded-lg ${
+                      errors.email ? 'border-red-500' : formData.email ? 'border-green-500' : ''
+                    }`}
                     required
                   />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
               </div>
 
@@ -425,9 +479,12 @@ const Hero = () => {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="input-dark w-full px-3 py-3 rounded-lg"
+                    className={`input-dark w-full px-3 py-3 rounded-lg ${
+                      errors.company ? 'border-red-500' : formData.company ? 'border-green-500' : ''
+                    }`}
                     required
                   />
+                  {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company}</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2" style={{color: 'var(--dark-text-secondary)'}}>
@@ -438,9 +495,12 @@ const Hero = () => {
                     name="role"
                     value={formData.role}
                     onChange={handleInputChange}
-                    className="input-dark w-full px-3 py-3 rounded-lg"
+                    className={`input-dark w-full px-3 py-3 rounded-lg ${
+                      errors.role ? 'border-red-500' : formData.role ? 'border-green-500' : ''
+                    }`}
                     required
                   />
+                  {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role}</p>}
                 </div>
               </div>
 
@@ -521,11 +581,25 @@ const Hero = () => {
               </div>
 
               {/* Submit Button */}
+              {submitMessage && (
+                <div className={`text-sm mb-2 ${submitMessage.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>
+                  {submitMessage}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="btn-primary-dark w-full px-6 py-3 rounded-lg font-bold"
+                disabled={isSubmitting}
+                className="btn-primary-dark w-full px-6 py-3 rounded-lg font-bold disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                Book Your Demo
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  'Book Your Demo'
+                )}
               </button>
             </form>
           </div>

@@ -40,14 +40,32 @@ yarn install
 ### Step 3: Start the Development Server
 
 ```bash
-# Start the development server
+# Start only the frontend (Vite)
 npm run dev
 
-# Or with yarn:
-yarn dev
+# Start only the backend API (Express)
+npm run dev:server
+
+# Start BOTH frontend and backend together (recommended for local dev)
+npm run dev:full
 ```
 
-The application will start on `http://localhost:5173` (or another available port if 5173 is in use).
+The frontend will start on `http://localhost:5173` (or another available port if 5173 is in use), and the backend API will start on `http://localhost:3001` by default.
+
+### Step 3.5: Configure Environment
+
+1. Copy the example environment file:
+
+```bash
+cp config/.env.example .env
+```
+
+2. Fill in the values in `.env`:
+
+- `FRONTEND_ORIGIN` should match your Vite origin (e.g., `http://localhost:5173`).
+- `VITE_API_BASE_URL` should point to your API (e.g., `http://localhost:3001`).
+- Configure SMTP settings to enable emails (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `FROM_EMAIL`, `ADMIN_EMAIL`).
+- Adjust `RATE_LIMIT_MAX` and `PORT` as needed.
 
 ### Step 4: Build for Production (Optional)
 
@@ -61,7 +79,10 @@ npm run preview
 
 ## 🛠️ Available Scripts
 
-- `npm run dev` - Start development server
+- `npm run dev` - Start frontend dev server (Vite)
+- `npm run server` - Start backend API once (Express)
+- `npm run dev:server` - Start backend API with reload (nodemon)
+- `npm run dev:full` - Start frontend and backend together
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint for code quality
@@ -71,18 +92,69 @@ npm run preview
 ```
 Minitrix/
 ├── src/
-│   ├── components/          # React components
-│   │   ├── blog/           # Blog-related components
-│   │   ├── Hero.tsx        # Hero section
-│   │   ├── Footer.tsx      # Enhanced footer with animations
+│   ├── components/            # React components
+│   │   ├── blog/              # Blog-related components
+│   │   ├── Hero.tsx           # Hero section with contact form
+│   │   ├── Contact.tsx        # Contact page form
+│   │   ├── Footer*.tsx        # Footers with newsletter forms
 │   │   └── ...
-│   ├── data/               # Static data and content
-│   ├── styles/             # CSS and theme files
-│   └── types/              # TypeScript type definitions
-├── public/                 # Static assets
-├── package.json           # Dependencies and scripts
-└── README.md             # This file
+│   ├── lib/
+│   │   └── api.ts             # Frontend API helper (CSRF + JSON)
+│   └── ...
+├── server/
+│   └── index.js               # Express API with CSRF, rate limit, email
+├── templates/                 # Email HTML templates
+│   ├── confirmation.html
+│   ├── admin-notification.html
+│   └── newsletter-confirmation.html
+├── config/
+│   └── .env.example           # Example environment configuration
+├── public/                    # Static assets
+├── package.json               # Dependencies and scripts
+└── README.md                  # This file
 ```
+
+## 🔌 API Endpoints
+
+- `GET /api/health` — Health check
+- `GET /api/csrf-token` — Issues CSRF token cookie and returns `{ csrfToken }`
+- `POST /api/contact` — Submit contact/quote request (used by `Hero.tsx` and `Contact.tsx`)
+- `POST /api/newsletter` — Subscribe to newsletter (used by footers and blog component)
+- `POST /api/chat/lead` — Submit chat lead from chat widget
+
+All POST endpoints:
+
+- Expect `Content-Type: application/json`
+- Require `x-csrf-token` header (automatically handled by `src/lib/api.ts`)
+- Return JSON responses `{ ok: boolean, message?: string, errors?: any[] }`
+
+## 🔒 Security Features
+
+- **CSRF Protection** via cookies and token header (using `csurf`) on all POST routes.
+- **Rate Limiting** (default 20 req/min; configurable via `RATE_LIMIT_MAX`).
+- **Input Validation** using `express-validator` for emails and required fields.
+- **Input Sanitization** using `sanitize-html` to prevent XSS in stored/logged content.
+- **Helmet** sets sensible security headers.
+- **CORS** restricted to `FRONTEND_ORIGIN` with `credentials` enabled.
+
+## ✉️ Email Delivery
+
+- Emails are sent via `nodemailer` using your SMTP credentials.
+- On contact submission:
+  - A confirmation email is sent to the submitter using `templates/confirmation.html`.
+  - An admin notification is sent to `ADMIN_EMAIL` using `templates/admin-notification.html`.
+- On newsletter subscription:
+  - A confirmation email is sent using `templates/newsletter-confirmation.html`.
+
+If SMTP verification fails at startup, submissions still work, but response may be `202` with a message indicating email delivery is pending.
+
+## 🧾 Logging
+
+- Submissions are appended as JSON lines in `server/logs/`:
+  - `submissions.log` for contact/hero forms
+  - `newsletter.log` for newsletter signups
+  - `chat-leads.log` for chat widget leads
+- The directory `server/logs/` is git-ignored.
 
 ## 🎨 Features
 
