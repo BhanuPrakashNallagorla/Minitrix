@@ -150,8 +150,12 @@ app.post(
       // Emails
       const adminEmail = process.env.ADMIN_EMAIL;
       try {
-        const userHtml = await renderTemplate('confirmation', { fullName: data.fullName, siteName: SITE_NAME });
-        const adminHtml = await renderTemplate('admin-notification', { ...data, siteName: SITE_NAME });
+        const tsHuman = new Intl.DateTimeFormat('en-IN', {
+          day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short'
+        }).format(new Date());
+        const templateVarsBase = { siteName: SITE_NAME, tsHuman, year: new Date().getFullYear(), FROM_EMAIL: process.env.FROM_EMAIL || process.env.SMTP_USER };
+        const userHtml = await renderTemplate('user-confirmation-modern', { ...templateVarsBase, fullName: data.fullName });
+        const adminHtml = await renderTemplate('admin-notification-modern', { ...templateVarsBase, ...data });
         const plainText = `New contact from ${data.fullName} (${data.email})\nCompany: ${data.company}\nRole: ${data.role}\nDetails: ${data.projectDetails || data.additionalInfo}`;
         const sendOps = [];
         if (adminEmail) {
@@ -234,13 +238,19 @@ app.post(
 
       const adminEmail = process.env.ADMIN_EMAIL;
       if (adminEmail) {
-        const adminHtml = await renderTemplate('admin-notification', {
+        const tsHuman = new Intl.DateTimeFormat('en-IN', {
+          day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short'
+        }).format(new Date());
+        const adminHtml = await renderTemplate('admin-notification-modern', {
           ...data,
           fullName: data.name,
           company: '',
           role: '',
           projectDetails: data.question,
           siteName: SITE_NAME,
+          tsHuman,
+          year: new Date().getFullYear(),
+          FROM_EMAIL: process.env.FROM_EMAIL || process.env.SMTP_USER,
         });
         await sendEmail({
           to: adminEmail,
