@@ -262,7 +262,10 @@ const Industries = () => {
           <p className="text-xl text-gray-300 leading-relaxed mb-12 max-w-3xl mx-auto">
             Every industry has unique challenges that require specialized solutions. Let's discuss how Minitrix can engineer custom AI solutions that understand your specific domain, regulations, and operational requirements.
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 group mx-auto">
+          <button 
+            onClick={() => window.dispatchEvent(new CustomEvent('book-demo'))}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 group mx-auto"
+          >
             <Calendar className="w-5 h-5" />
             <span>Schedule Your Custom Consultation</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

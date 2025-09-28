@@ -18,14 +18,29 @@ import AboutUs from './components/AboutUs';
 import InsightsHub from './components/InsightsHub';
 import Industries from './components/Industries';
 import ChatWidget from './components/ChatWidget';
+import BlogArticle from './components/BlogArticle';
 import './styles/themes.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries' | 'footer-data-weave' | 'footer-living-brand'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries' | 'footer-data-weave' | 'footer-living-brand' | 'article'>('home');
+  const [currentArticleId, setCurrentArticleId] = useState<string | null>(null);
 
   const handleNavigation = (page: 'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries') => {
     setCurrentPage(page);
+    setCurrentArticleId(null);
     // Scroll to top when navigating between pages
+    window.scrollTo(0, 0);
+  };
+
+  const handleArticleNavigation = (articleId: string) => {
+    setCurrentArticleId(articleId);
+    setCurrentPage('article');
+    window.scrollTo(0, 0);
+  };
+
+  const handleBackToBlog = () => {
+    setCurrentPage('blog');
+    setCurrentArticleId(null);
     window.scrollTo(0, 0);
   };
 
@@ -34,16 +49,50 @@ function App() {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  // Global handler for "Book Demo" actions from anywhere in the app
+  useEffect(() => {
+    const handler = () => {
+      if (currentPage !== 'home') {
+        setCurrentPage('home');
+        setTimeout(() => {
+          const contactSection = document.getElementById('contact-section');
+          if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 300);
+      } else {
+        const contactSection = document.getElementById('contact-section');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    window.addEventListener('book-demo' as any, handler as EventListener);
+    return () => {
+      window.removeEventListener('book-demo' as any, handler as EventListener);
+    };
+  }, [currentPage]);
+
   const handleFooterPreview = (footerType: 'footer-data-weave' | 'footer-living-brand') => {
     setCurrentPage(footerType);
   };
+
+  if (currentPage === 'article' && currentArticleId) {
+    return (
+      <div className="min-h-screen bg-black text-white relative">
+        <BlogArticle articleId={currentArticleId} onBack={handleBackToBlog} />
+        <ChatWidget />
+      </div>
+    );
+  }
 
   if (currentPage === 'blog') {
     return (
       <div className="min-h-screen bg-black text-white relative">
         <Navigation onNavigate={handleNavigation} currentPage={currentPage} />
-        <InsightsHub />
-        <Footer />
+        <InsightsHub onArticleClick={handleArticleNavigation} />
+        <Footer onNavigate={handleNavigation} />
         <ChatWidget />
       </div>
     );
@@ -55,7 +104,7 @@ function App() {
         <BlackholeBackground />
         <Navigation onNavigate={handleNavigation} currentPage={currentPage} />
         <CustomizableSLMs />
-        <Footer />
+        <Footer onNavigate={handleNavigation} />
         <ChatWidget />
       </div>
     );
@@ -67,7 +116,7 @@ function App() {
         <BlackholeBackground />
         <Navigation onNavigate={handleNavigation} currentPage={currentPage} />
         <UseCases />
-        <Footer />
+        <Footer onNavigate={handleNavigation} />
         <ChatWidget />
       </div>
     );
@@ -78,7 +127,7 @@ function App() {
       <div className="min-h-screen bg-black text-white relative">
         <Navigation onNavigate={handleNavigation} currentPage={currentPage} />
         <AboutUs />
-        <Footer />
+        <Footer onNavigate={handleNavigation} />
         <ChatWidget />
       </div>
     );
@@ -89,7 +138,7 @@ function App() {
       <div className="min-h-screen bg-black text-white relative">
         <Navigation onNavigate={handleNavigation} currentPage={currentPage} />
         <Industries />
-        <Footer />
+        <Footer onNavigate={handleNavigation} />
         <ChatWidget />
       </div>
     );
@@ -121,7 +170,7 @@ function App() {
             </div>
           </div>
         </div>
-        <FooterDataWeave />
+        <FooterDataWeave onNavigate={handleNavigation} />
       </div>
     );
   }
@@ -152,7 +201,7 @@ function App() {
             </div>
           </div>
         </div>
-        <FooterLivingBrand />
+        <FooterLivingBrand onNavigate={handleNavigation} />
       </div>
     );
   }
@@ -169,7 +218,7 @@ function App() {
       <ComparisonTable />
       <EnterpriseSolutions />
       <Contact />
-      <Footer />
+      <Footer onNavigate={handleNavigation} />
       <ChatWidget />
     </div>
   );

@@ -312,7 +312,10 @@ const UseCases = () => {
             transformational results for your specific use case.
           </p>
           
-          <button className="inline-flex items-center px-12 py-6 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white text-xl font-semibold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-cyan-400/25 hover:scale-105 group">
+          <button 
+            onClick={() => window.dispatchEvent(new CustomEvent('book-demo'))}
+            className="inline-flex items-center px-12 py-6 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white text-xl font-semibold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-cyan-400/25 hover:scale-105 group"
+          >
             Schedule Your Custom Consultation
             <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300" />
           </button>

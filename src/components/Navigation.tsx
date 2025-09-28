@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 
 interface NavigationProps {
   onNavigate?: (page: 'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries') => void;
-  currentPage?: 'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries';
+  currentPage?: 'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries' | 'article';
 }
 
 const Navigation = ({ onNavigate, currentPage = 'home' }: NavigationProps) => {

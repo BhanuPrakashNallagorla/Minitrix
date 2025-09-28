@@ -123,7 +123,10 @@ const ClientTestimonials = () => {
         {/* CTA Section */}
         <div className="text-center mt-16">
           <p className="mb-6" style={{color: 'var(--dark-text-secondary)'}}>Ready to join these industry leaders?</p>
-          <button className="btn-primary-dark inline-flex items-center px-8 py-4 rounded-lg font-semibold">
+          <button 
+            onClick={() => window.dispatchEvent(new CustomEvent('book-demo'))}
+            className="btn-primary-dark inline-flex items-center px-8 py-4 rounded-lg font-semibold"
+          >
             Book Your Demo Today
           </button>
         </div>

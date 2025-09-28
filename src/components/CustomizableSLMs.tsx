@@ -373,7 +373,7 @@ const CustomizableSLMs = () => {
           </p>
           
           <button 
-            onClick={() => setShowModal(true)}
+            onClick={() => window.dispatchEvent(new CustomEvent('book-demo'))}
             className="inline-flex items-center px-12 py-6 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-xl font-semibold rounded-lg transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105 group"
           >
             Schedule Your Custom SLM Consultation

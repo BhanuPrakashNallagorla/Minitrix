@@ -158,20 +158,22 @@ const AboutUs = () => {
             Whether you're looking to implement your first AI solution or scale existing capabilities, we're here to guide you through every step of the journey. Let's explore how Minitrix can help transform your organization's relationship with artificial intelligence.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 group">
-              <Calendar className="w-5 h-5" />
-              <span>Schedule a Consultation</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button className="border-2 border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 group">
-              <span>View Our Services</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
+          <button 
+            onClick={() => window.dispatchEvent(new CustomEvent('book-demo'))}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 group"
+          >
+            <Calendar className="w-5 h-5" />
+            <span>Schedule a Consultation</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <button className="border-2 border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 group">
+            <span>View Our Services</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
         </div>
       </section>
     </div>
   );
 };
-
 export default AboutUs;

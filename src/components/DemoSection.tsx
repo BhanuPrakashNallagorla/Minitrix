@@ -173,7 +173,10 @@ const DemoSection = () => {
 
             {/* CTA Button Below Chatbox */}
             <div className="pt-8 flex justify-center">
-              <button className="bg-gray-800 border border-gray-600 hover:border-cyan-400 px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 active:scale-95 hover:bg-gray-700 flex items-center space-x-2">
+              <button 
+                onClick={() => window.dispatchEvent(new CustomEvent('book-demo'))}
+                className="bg-gray-800 border border-gray-600 hover:border-cyan-400 px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 active:scale-95 hover:bg-gray-700 flex items-center space-x-2"
+              >
                 <Calendar className="h-4 w-4" />
                 <span className="gradient-text-animated">Book Custom Demo</span>
               </button>

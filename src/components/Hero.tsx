@@ -358,19 +358,6 @@ const Hero = () => {
       {/* Light Theme Background Pattern */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-cyan-900/20"></div>
-        {/* Floating Geometric Elements - Light Theme */}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute w-20 h-20 border border-blue-200/40 transform rotate-45 animate-float`}
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + i * 10}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${4 + i}s`
-            }}
-          />
-        ))}
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

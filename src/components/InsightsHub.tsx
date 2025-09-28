@@ -14,7 +14,11 @@ interface Article {
   clientLogo?: string;
 }
 
-const InsightsHub = () => {
+interface InsightsHubProps {
+  onArticleClick?: (articleId: string) => void;
+}
+
+const InsightsHub: React.FC<InsightsHubProps> = ({ onArticleClick }) => {
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -32,35 +36,35 @@ const InsightsHub = () => {
   const solutionDeepDives: Article[] = [
     {
       id: 'solution-1',
-      title: 'Healthcare Case Study: Achieving 99.2% Accuracy in Medical Diagnosis',
-      excerpt: 'How our AI solution transformed diagnostic accuracy for a leading healthcare provider.',
+      title: 'HealthCorp: Healthcare Case Study - Achieving 99.2% Accuracy in Medical Diagnosis',
+      excerpt: 'Discover how HealthCorp transformed their diagnostic processes, achieving 99.2% accuracy and 70% time reduction through AI-powered medical diagnosis systems across 15 facilities.',
       category: 'Solution Deep Dives',
       readTime: '12 min read',
       date: '2024-01-10',
       author: 'Solutions Team',
-      metric: '70% Time Reduction',
+      metric: '99.2% Accuracy • $4.2M Savings',
       clientLogo: 'HealthCorp'
     },
     {
       id: 'solution-2',
-      title: 'Financial Services: Fraud Detection at Scale',
-      excerpt: 'Real-time fraud prevention system processing 1M+ transactions daily.',
+      title: 'FinanceFirst: Financial Services - Fraud Detection at Scale',
+      excerpt: 'Discover how FinanceFirst achieved 99.8% fraud detection accuracy while processing 1M+ daily transactions, reducing false positives by 70% and preventing $15M+ in annual losses through real-time AI-powered fraud prevention.',
       category: 'Solution Deep Dives',
       readTime: '10 min read',
       date: '2024-01-08',
       author: 'Solutions Team',
-      metric: '99.8% Accuracy',
+      metric: '99.8% Accuracy • $15M+ Prevented',
       clientLogo: 'FinanceFirst'
     },
     {
       id: 'solution-3',
-      title: 'Manufacturing: Predictive Maintenance Revolution',
-      excerpt: 'Reducing equipment downtime by 85% through intelligent monitoring.',
+      title: 'ManufacturePro: Manufacturing - Predictive Maintenance Revolution',
+      excerpt: 'Discover how ManufacturePro achieved 85% downtime reduction and 40% cost savings through AI-driven predictive maintenance across 500+ machines, transforming their manufacturing operations and achieving 95% prediction accuracy.',
       category: 'Solution Deep Dives',
       readTime: '9 min read',
       date: '2024-01-05',
       author: 'Solutions Team',
-      metric: '85% Downtime Reduction',
+      metric: '85% Downtime Reduction • $920K Savings',
       clientLogo: 'ManufacturePro'
     }
   ];
@@ -138,7 +142,10 @@ const InsightsHub = () => {
                   <span>{featuredArticle.author}</span>
                 </div>
               </div>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center space-x-2 group">
+              <button 
+                onClick={() => onArticleClick?.(featuredArticle.id)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center space-x-2 group"
+              >
                 <span>Read the Article</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -227,7 +234,10 @@ const InsightsHub = () => {
                     <span>{article.readTime}</span>
                     <span>{article.date}</span>
                   </div>
-                  <button className="text-blue-400 hover:text-blue-300 font-medium flex items-center space-x-1 group">
+                  <button 
+                    onClick={() => onArticleClick?.(article.id)}
+                    className="text-blue-400 hover:text-blue-300 font-medium flex items-center space-x-1 group"
+                  >
                     <span>View Case Study</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -283,7 +293,10 @@ const InsightsHub = () => {
                     <span>{guide.readTime}</span>
                     <span>{guide.author}</span>
                   </div>
-                  <button className="text-purple-400 hover:text-purple-300 font-medium flex items-center space-x-1 group">
+                  <button 
+                    onClick={() => onArticleClick?.(guide.id)}
+                    className="text-purple-400 hover:text-purple-300 font-medium flex items-center space-x-1 group"
+                  >
                     <span>Read Guide</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -349,7 +362,10 @@ const InsightsHub = () => {
                     </p>
                   </div>
                   <div className="mt-4 md:mt-0 md:ml-6">
-                    <button className="text-blue-400 hover:text-blue-300 font-medium flex items-center space-x-1 group">
+                    <button 
+                      onClick={() => onArticleClick?.(article.id)}
+                      className="text-blue-400 hover:text-blue-300 font-medium flex items-center space-x-1 group"
+                    >
                       <span>Read More</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>

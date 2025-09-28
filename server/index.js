@@ -20,10 +20,42 @@ const PORT = process.env.PORT || 3002;
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173';
 const SITE_NAME = process.env.SITE_NAME || 'Minitrix';
 const LOGS_DIR = path.join(process.cwd(), 'server', 'logs');
+const EMAIL_TEMPLATE_VARIANT = process.env.EMAIL_TEMPLATE_VARIANT || 'enterprise';
+const TIME_LOCALE = process.env.TIME_LOCALE || 'en-US';
+const TIME_ZONE = process.env.TIME_ZONE || 'Asia/Kolkata';
+const BRAND = {
+  logoUrl: process.env.EMAIL_LOGO_URL || '',
+  brandAddress: process.env.BRAND_ADDRESS || '',
+  supportEmail: process.env.SUPPORT_EMAIL || process.env.FROM_EMAIL || process.env.SMTP_USER || '',
+  supportPhone: process.env.SUPPORT_PHONE || '',
+  websiteUrl: process.env.WEBSITE_URL || '',
+  linkedinUrl: process.env.LINKEDIN_URL || '',
+  twitterUrl: process.env.TWITTER_URL || '',
+  unsubscribeUrl: process.env.UNSUBSCRIBE_URL || '',
+  crmUrl: process.env.CRM_URL || '',
+  priorityUrl: process.env.PRIORITY_URL || '',
+  ctaUrl: process.env.CTA_URL || '',
+  agentName: process.env.AGENT_NAME || 'Minitrix Team',
+  agentTitle: process.env.AGENT_TITLE || 'AI Strategist',
+  agentPhotoUrl: process.env.AGENT_PHOTO_URL || '',
+  trackingPixelUrl: process.env.TRACKING_PIXEL_URL || '',
+  schemaJsonLd: process.env.SCHEMA_JSONLD || '',
+};
+const AB_TEST_ENTERPRISE_PERCENT = Number(process.env.AB_TEST_ENTERPRISE_PERCENT || 50);
 
 // Ensure logs directory exists
 if (!fs.existsSync(LOGS_DIR)) {
   fs.mkdirSync(LOGS_DIR, { recursive: true });
+}
+
+function appendTrackingPixel(html) {
+  const url = BRAND.trackingPixelUrl;
+  if (!url) return html;
+  const pixel = `<img src="${url}" width="1" height="1" alt="" style="display:none" />`;
+  if (html.includes('</body>')) {
+    return html.replace('</body>', `${pixel}</body>`);
+  }
+  return html + pixel;
 }
 
 // Middleware
@@ -90,6 +122,16 @@ async function renderTemplate(templateName, variables = {}) {
   return content;
 }
 
+function formatTsHuman(date = new Date()) {
+  try {
+    const dateStr = new Intl.DateTimeFormat(TIME_LOCALE, { month: 'long', day: '2-digit', year: 'numeric', timeZone: TIME_ZONE }).format(date);
+    const timeStr = new Intl.DateTimeFormat(TIME_LOCALE, { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: TIME_ZONE, timeZoneName: 'short' }).format(date);
+    return `${dateStr} • ${timeStr}`;
+  } catch (_) {
+    return new Date().toISOString();
+  }
+}
+
 async function sendEmail({ to, subject, html, text }) {
   const from = process.env.FROM_EMAIL || process.env.SMTP_USER;
   if (!from) throw new Error('FROM_EMAIL or SMTP_USER not configured');
@@ -150,12 +192,30 @@ app.post(
       // Emails
       const adminEmail = process.env.ADMIN_EMAIL;
       try {
-        const tsHuman = new Intl.DateTimeFormat('en-IN', {
-          day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short'
-        }).format(new Date());
+        const tsHuman = formatTsHuman();
         const templateVarsBase = { siteName: SITE_NAME, tsHuman, year: new Date().getFullYear(), FROM_EMAIL: process.env.FROM_EMAIL || process.env.SMTP_USER };
-        const userHtml = await renderTemplate('user-confirmation-modern', { ...templateVarsBase, fullName: data.fullName });
-        const adminHtml = await renderTemplate('admin-notification-modern', { ...templateVarsBase, ...data });
+        let templates;
+        if (EMAIL_TEMPLATE_VARIANT === 'enterprise') {
+          templates = { admin: 'admin-notification-enterprise', user: 'user-confirmation-enterprise' };
+        } else if (EMAIL_TEMPLATE_VARIANT === 'modern') {
+          templates = { admin: 'admin-notification-modern', user: 'user-confirmation-modern' };
+        } else if (EMAIL_TEMPLATE_VARIANT === 'ab') {
+          const roll = Math.random() * 100;
+          const useEnterprise = roll < AB_TEST_ENTERPRISE_PERCENT;
+          templates = useEnterprise
+            ? { admin: 'admin-notification-enterprise', user: 'user-confirmation-enterprise' }
+            : { admin: 'admin-notification-modern', user: 'user-confirmation-modern' };
+        } else {
+          templates = { admin: 'admin-notification-modern', user: 'user-confirmation-modern' };
+        }
+        const additionalInfoBlock = data.additionalInfo
+          ? `<div class="h2" style="margin-top:16px;">Additional Information</div><div class="text" style="margin-top:8px; color:#111827;">${data.additionalInfo}</div>`
+          : '';
+
+        const userHtmlRaw = await renderTemplate(templates.user, { ...templateVarsBase, ...BRAND, fullName: data.fullName });
+        const adminHtmlRaw = await renderTemplate(templates.admin, { ...templateVarsBase, ...BRAND, ...data, additionalInfoBlock });
+        const userHtml = appendTrackingPixel(userHtmlRaw);
+        const adminHtml = appendTrackingPixel(adminHtmlRaw);
         const plainText = `New contact from ${data.fullName} (${data.email})\nCompany: ${data.company}\nRole: ${data.role}\nDetails: ${data.projectDetails || data.additionalInfo}`;
         const sendOps = [];
         if (adminEmail) {
@@ -238,10 +298,23 @@ app.post(
 
       const adminEmail = process.env.ADMIN_EMAIL;
       if (adminEmail) {
-        const tsHuman = new Intl.DateTimeFormat('en-IN', {
-          day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short'
-        }).format(new Date());
-        const adminHtml = await renderTemplate('admin-notification-modern', {
+        const tsHuman = formatTsHuman();
+        let templates;
+        if (EMAIL_TEMPLATE_VARIANT === 'enterprise') {
+          templates = { admin: 'admin-notification-enterprise' };
+        } else if (EMAIL_TEMPLATE_VARIANT === 'modern') {
+          templates = { admin: 'admin-notification-modern' };
+        } else if (EMAIL_TEMPLATE_VARIANT === 'ab') {
+          const roll = Math.random() * 100;
+          const useEnterprise = roll < AB_TEST_ENTERPRISE_PERCENT;
+          templates = useEnterprise
+            ? { admin: 'admin-notification-enterprise' }
+            : { admin: 'admin-notification-modern' };
+        } else {
+          templates = { admin: 'admin-notification-modern' };
+        }
+        const adminHtmlRaw = await renderTemplate(templates.admin, {
+          ...BRAND,
           ...data,
           fullName: data.name,
           company: '',
@@ -251,7 +324,9 @@ app.post(
           tsHuman,
           year: new Date().getFullYear(),
           FROM_EMAIL: process.env.FROM_EMAIL || process.env.SMTP_USER,
+          additionalInfoBlock: '',
         });
+        const adminHtml = appendTrackingPixel(adminHtmlRaw);
         await sendEmail({
           to: adminEmail,
           subject: `New chat lead - ${data.name}`,

@@ -7,7 +7,7 @@ const CaseStudies = () => {
       industry: 'Healthcare Provider',
       title: 'HIPAA-Compliant AI Transformation',
       description: 'Major healthcare network replaced expensive LLM APIs with custom SLMs for patient data analysis',
-      image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=400&h=250&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=95',
       metrics: [
         { label: 'Cost Reduction', value: '75%', icon: TrendingUp },
         { label: 'Compliance', value: 'HIPAA', icon: Shield },
@@ -21,7 +21,7 @@ const CaseStudies = () => {
       industry: 'Financial Services',
       title: 'Real-time Fraud Detection',
       description: 'Investment firm deployed specialized SLMs for transaction monitoring and risk assessment',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=95',
       metrics: [
         { label: 'Response Time', value: '60% faster', icon: TrendingUp },
         { label: 'Accuracy', value: '94.5%', icon: Shield },
@@ -35,7 +35,7 @@ const CaseStudies = () => {
       industry: 'E-commerce Platform',
       title: 'Personalized Shopping Experience',
       description: 'Online retailer implemented SLMs for product recommendations and customer service automation',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=95',
       metrics: [
         { label: 'Annual Savings', value: '$2M', icon: TrendingUp },
         { label: 'Accuracy Boost', value: '40%', icon: Shield },
@@ -49,7 +49,7 @@ const CaseStudies = () => {
       industry: 'Manufacturing',
       title: 'Predictive Maintenance System',
       description: 'Global manufacturer deployed SLMs for equipment monitoring and predictive maintenance scheduling',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=250&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=95',
       metrics: [
         { label: 'Downtime Reduction', value: '65%', icon: TrendingUp },
         { label: 'Maintenance Costs', value: '-$3.2M', icon: DollarSign },
@@ -63,7 +63,7 @@ const CaseStudies = () => {
       industry: 'Logistics & Supply Chain',
       title: 'Smart Route Optimization',
       description: 'Transportation company implemented SLMs for dynamic route planning and delivery optimization',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=250&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=95',
       metrics: [
         { label: 'Fuel Savings', value: '45%', icon: TrendingUp },
         { label: 'Delivery Speed', value: '+30%', icon: Clock },

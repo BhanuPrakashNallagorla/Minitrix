@@ -79,9 +79,7 @@ const Contact = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text-dark">
             Ready to Transform Your AI Strategy?
           </h2>
-          <p className="text-xl max-w-3xl mx-auto" style={{color: 'var(--dark-text-secondary)'}}>
-            Join leading companies who have already cut their AI costs by 80% while improving performance
-          </p>
+          
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">

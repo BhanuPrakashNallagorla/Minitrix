@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>New Contact • {{siteName}}</title>
+  <!-- Preheader -->
+  <meta name="description" content="New contact submission received for {{siteName}}" />
+  <style>
+    /* Reset */
+    html, body { margin:0; padding:0; height:100%; }
+    img { border:0; line-height:100%; text-decoration:none; -ms-interpolation-mode:bicubic; display:block; }
+    table { border-collapse:collapse; }
+    a { text-decoration:none; }
+
+    /* Layout */
+    .bg { width:100% !important; background:#F8F9FA; }
+    .container { width:100%; max-width:680px; margin:0 auto; background:#FFFFFF; border:1px solid #E9ECEF; border-radius:14px; overflow:hidden; box-shadow:0 6px 24px rgba(0,0,0,0.06); }
+    .p-24 { padding:24px; }
+
+    /* Header */
+    .header { padding:20px 24px; border-bottom:1px solid #E9ECEF; background:#FFFFFF; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .brand-logo { width:120px; height:auto; }
+    .brand-name { font:800 24px/1.2 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#0F172A; }
+    .gradient-text-animated { background: linear-gradient(45deg, #ffffff, #06b6d4, #3b82f6, #ffffff); background-size: 400% 400%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: gradient-shift 3s ease infinite; }
+    @keyframes gradient-shift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+    /* Headings & Text */
+    .h1 { font:700 24px/1.35 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#2D3748; margin:0; }
+    .h2 { font:600 18px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#4A5568; margin:0 0 8px 0; }
+    .text { font:400 16px/1.7 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#718096; }
+
+    /* Cards */
+    .card { border:1px solid #E9ECEF; border-radius:12px; background:#FFFFFF; }
+    .card-pad { padding:16px; }
+    .row { border-top:1px solid #EEF2F7; }
+    .row:first-child { border-top:none; }
+    .label { width:34%; padding:12px 0; font:600 14px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#374151; }
+    .value { width:66%; padding:12px 0; font:400 16px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#111827; }
+    .muted { color:#718096; }
+
+    /* Badges */
+    .badge { display:inline-block; padding:4px 10px; border-radius:999px; font:700 12px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+    .badge-new { background:#E6F0FF; color:#004499; border:1px solid #CCE0FF; }
+
+    /* Buttons */
+    .btn { display:inline-block; background:#0066CC; border:1px solid #0066CC; color:#FFFFFF !important; padding:12px 18px; border-radius:10px; font:600 16px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+    .btn.secondary { background:#FFFFFF; color:#004499 !important; border-color:#004499; }
+    .btn + .btn { margin-left:8px; }
+
+    /* Footer */
+    .footer { color:#94A3B8; font:400 12px/1.7 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+
+    /* Mobile */
+    @media only screen and (max-width:600px){
+      .container { border-radius:0; }
+      .label, .value { display:block; width:100% !important; padding:8px 0; }
+      .btn { display:block; width:100% !important; text-align:center; margin:0 0 8px 0 !important; }
+      .btn + .btn { margin-left:0 !important; }
+    }
+
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      .bg { background:#0B1220 !important; }
+      .container { background:#0F172A !important; border-color:#1E293B !important; }
+      .header { background:#0F172A !important; border-color:#1E293B !important; }
+      .h1 { color:#E2E8F0 !important; }
+      .h2 { color:#CBD5E1 !important; }
+      .text, .value { color:#E2E8F0 !important; }
+      .label { color:#94A3B8 !important; }
+      .footer { color:#94A3B8 !important; }
+      .card { background:#0B1220 !important; border-color:#1E293B !important; }
+      .row { border-color:#1E293B !important; }
+    }
+  </style>
+</head>
+<body class="bg" style="margin:0; padding:0; background:#F8F9FA;">
+  <!-- Hidden preheader text -->
+  <div style="display:none;font-size:1px;color:#fff;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">New contact submission received for {{siteName}}</div>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="bg" style="background:#F8F9FA;">
+    <tr>
+      <td align="center" style="padding:24px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="container">
+          <!-- Header -->
+          <tr>
+            <td class="header" style="padding:20px 24px; border-bottom:1px solid #E9ECEF; background:#FFFFFF;">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td align="left" style="vertical-align:middle;">
+                    <table role="presentation">
+                      <tr>
+                        <td style="vertical-align:middle;">
+                          <img src="{{logoUrl}}" width="120" height="32" alt="{{siteName}}" class="brand-logo" style="display:block; max-width:120px; height:auto;" />
+                        </td>
+                        <td style="padding-left:12px; vertical-align:middle;" class="brand-name">
+                          <span class="gradient-text-animated">{{siteName}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td align="right" style="vertical-align:middle;">
+                    <span class="badge badge-new">NEW</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Title -->
+          <tr>
+            <td class="p-24">
+              <h1 class="h1" style="margin:0 0 4px 0;">New Contact Submission</h1>
+              <div class="text" style="margin-top:4px;">Submitted on <strong>{{tsHuman}}</strong></div>
+            </td>
+          </tr>
+
+          <!-- Contact Info Card -->
+          <tr>
+            <td class="p-24">
+              <table role="presentation" width="100%" class="card">
+                <tr><td class="card-pad">
+                  <div class="h2">Contact Information</div>
+                  <table role="presentation" width="100%">
+                    <tr class="row"><td class="label">Full Name</td><td class="value"><strong>{{fullName}}</strong></td></tr>
+                    <tr class="row"><td class="label">Email</td><td class="value"><a href="mailto:{{email}}" style="color:#0066CC;"><strong>{{email}}</strong></a></td></tr>
+                    <tr class="row"><td class="label">Phone</td><td class="value">{{phone}}</td></tr>
+                    <tr class="row"><td class="label">Country</td><td class="value">{{countryName}}</td></tr>
+                  </table>
+                </td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Business Details Card -->
+          <tr>
+            <td class="p-24">
+              <table role="presentation" width="100%" class="card">
+                <tr><td class="card-pad">
+                  <div class="h2">Business Details</div>
+                  <table role="presentation" width="100%">
+                    <tr class="row"><td class="label">Company</td><td class="value"><strong>{{company}}</strong></td></tr>
+                    <tr class="row"><td class="label">Role</td><td class="value">{{role}}</td></tr>
+                  </table>
+                </td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Message Card -->
+          <tr>
+            <td class="p-24">
+              <table role="presentation" width="100%" class="card">
+                <tr><td class="card-pad">
+                  <div class="h2">Project Details</div>
+                  <div class="text" style="margin-top:8px; color:#111827;">{{projectDetails}}</div>
+                  {{additionalInfoBlock}}
+                </td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Metadata & Actions -->
+          <tr>
+            <td class="p-24">
+              <table role="presentation" width="100%" class="card">
+                <tr><td class="card-pad">
+                  <div class="h2">Metadata</div>
+                  <table role="presentation" width="100%">
+                    <tr class="row"><td class="label">IP Address</td><td class="value">{{ip}}</td></tr>
+                    <tr class="row"><td class="label">User Agent</td><td class="value">{{userAgent}}</td></tr>
+                  </table>
+
+                  <div style="height:16px"></div>
+
+                  <!-- Buttons (bulletproof) -->
+                  <table role="presentation" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td align="left" style="padding-right:8px;">
+                        <!--[if mso]>
+                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="mailto:{{email}}" style="height:44px;v-text-anchor:middle;width:200px;" arcsize="10%" strokecolor="#0066CC" fillcolor="#0066CC">
+                          <w:anchorlock/>
+                          <center style="color:#ffffff;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;font-size:16px;font-weight:600;">Reply to Contact</center>
+                        </v:roundrect>
+                        <![endif]-->
+                        <!--[if !mso]><!-- -->
+                        <a class="btn" href="mailto:{{email}}" style="display:inline-block;background:#0066CC;border:1px solid #0066CC;color:#FFFFFF !important;padding:12px 18px;border-radius:10px;font:600 16px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">Reply to Contact</a>
+                        <!--<![endif]-->
+                      </td>
+                      <td align="left" style="padding-right:8px;">
+                        <!--[if mso]>
+                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{crmUrl}}" style="height:44px;v-text-anchor:middle;width:160px;" arcsize="10%" strokecolor="#004499" fillcolor="#FFFFFF">
+                          <w:anchorlock/>
+                          <center style="color:#004499;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;font-size:16px;font-weight:600;">Add to CRM</center>
+                        </v:roundrect>
+                        <![endif]-->
+                        <!--[if !mso]><!-- -->
+                        <a class="btn secondary" href="{{crmUrl}}" style="display:inline-block;background:#FFFFFF;border:1px solid #004499;color:#004499 !important;padding:12px 18px;border-radius:10px;font:600 16px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">Add to CRM</a>
+                        <!--<![endif]-->
+                      </td>
+                      <td align="left">
+                        <!--[if mso]>
+                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{priorityUrl}}" style="height:44px;v-text-anchor:middle;width:190px;" arcsize="10%" strokecolor="#004499" fillcolor="#FFFFFF">
+                          <w:anchorlock/>
+                          <center style="color:#004499;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;font-size:16px;font-weight:600;">Mark as Priority</center>
+                        </v:roundrect>
+                        <![endif]-->
+                        <!--[if !mso]><!-- -->
+                        <a class="btn secondary" href="{{priorityUrl}}" style="display:inline-block;background:#FFFFFF;border:1px solid #004499;color:#004499 !important;padding:12px 18px;border-radius:10px;font:600 16px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">Mark as Priority</a>
+                        <!--<![endif]-->
+                      </td>
+                    </tr>
+                  </table>
+                </td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td class="p-24">
+              <div class="footer" style="text-align:center;">
+                <div style="margin-bottom:4px;">© {{year}} {{siteName}} • All rights reserved</div>
+                <div>{{brandAddress}}</div>
+                <div>Contact: <a href="mailto:{{supportEmail}}" style="color:#0066CC;">{{supportEmail}}</a> • {{supportPhone}}</div>
+                <div style="margin-top:8px;"><a href="{{unsubscribeUrl}}" style="color:#94A3B8;">Unsubscribe</a></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

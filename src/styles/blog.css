@@ -1,0 +1,1819 @@
+/* Blog Article Styles - Dark Theme */
+.prose {
+  color: #e5e7eb;
+  max-width: none;
+  background: #0a0a0a;
+}
+
+.prose h2 {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #1f2937;
+  padding-bottom: 0.5rem;
+  background: linear-gradient(135deg, #00f5ff, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.prose h3 {
+  color: #00f5ff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  color: #d1d5db;
+}
+
+.prose .lead {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #f3f4f6;
+  margin-bottom: 2rem;
+  background: rgba(0, 245, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid #00f5ff;
+}
+
+.prose ul, .prose ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose blockquote {
+  border-left: 4px solid #00f5ff;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  background: rgba(0, 245, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.prose blockquote p {
+  color: #f3f4f6;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.prose blockquote cite {
+  color: #00f5ff;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.prose .image-container {
+  margin: 2rem 0;
+}
+
+.prose .article-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin-bottom: 0.5rem;
+  background: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.prose .article-image::before {
+  content: "📷 Image";
+  color: #9ca3af;
+  font-size: 1.2rem;
+}
+
+.prose .image-caption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.prose .warning-box {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin: 2rem 0;
+  border-left: 4px solid #ef4444;
+}
+
+.prose .warning-box h4 {
+  color: #fca5a5;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.prose .warning-box p {
+  color: #f3f4f6;
+}
+
+.prose .cta-box {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.prose .cta-box h3 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.prose .cta-button {
+  background: white;
+  color: #1e40af;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.prose .cta-button:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+.prose .author-bio {
+  background: #1f2937;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-top: 3rem;
+}
+
+.prose .author-image {
+  height: 200px;
+  border-radius: 1rem;
+}
+
+.prose .team-credentials {
+  margin-top: 1.5rem;
+}
+
+.prose .intro-section {
+  margin-bottom: 3rem;
+}
+
+.prose .stats-infographic {
+  margin: 2rem 0;
+}
+
+.prose .inference-types {
+  margin: 1.5rem 0;
+}
+
+/* Left/Right Image Layouts */
+.prose .content-with-image-left {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  align-items: flex-start;
+}
+
+.prose .content-with-image-right {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  align-items: flex-start;
+}
+
+.prose .image-container-left {
+  flex: 0 0 300px;
+  order: 1;
+}
+
+.prose .image-container-right {
+  flex: 0 0 300px;
+  order: 2;
+}
+
+.prose .text-content {
+  flex: 1;
+}
+
+.prose .content-with-image-left .text-content {
+  order: 2;
+}
+
+.prose .content-with-image-right .text-content {
+  order: 1;
+}
+
+.prose .article-image-side {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease-in-out;
+}
+
+.prose .article-image-side:hover {
+  transform: scale(1.02);
+}
+
+/* Mobile responsiveness for side layouts */
+@media (max-width: 768px) {
+  .prose .content-with-image-left,
+  .prose .content-with-image-right {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .prose .image-container-left,
+  .prose .image-container-right {
+    flex: none;
+    order: 1;
+  }
+  
+  .prose .text-content {
+    order: 2;
+  }
+  
+  .prose .article-image-side {
+    height: 150px;
+  }
+}
+
+.prose hr {
+  border: none;
+  height: 1px;
+  background: #374151;
+  margin: 3rem 0;
+}
+
+/* Healthcare Case Study Premium Styling - Dark Theme */
+.case-study-content {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  color: #e5e7eb;
+  background: #0a0a0a;
+}
+
+/* Hero Stats Overlay */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 3rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, #00f5ff, #0ea5e9);
+  border-radius: 1rem;
+  color: #0a0a0a;
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00c851;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+/* Executive Summary */
+.executive-summary {
+  background: rgba(0, 245, 255, 0.05);
+  padding: 3rem;
+  border-radius: 1rem;
+  margin: 3rem 0;
+  border-left: 4px solid #00f5ff;
+  border: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.summary-highlights {
+  margin-top: 2rem;
+}
+
+.highlight-item {
+  background: rgba(0, 245, 255, 0.1);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  border-left: 3px solid #00f5ff;
+  color: #f3f4f6;
+}
+
+/* Challenge Metrics */
+.challenge-metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.metric-item {
+  background: #fff5f5;
+  border: 1px solid #ff6b6b;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  flex: 1;
+  min-width: 150px;
+}
+
+.metric-item.negative {
+  background: #fff5f5;
+  border-color: #ff6b6b;
+}
+
+.metric-item.positive {
+  background: #f0fff4;
+  border-color: #00c851;
+}
+
+.metric-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff6b6b;
+  margin-bottom: 0.5rem;
+}
+
+.metric-item.positive .metric-value {
+  color: #00c851;
+}
+
+.metric-desc {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Medical Quote Styling */
+.medical-quote {
+  background: #e3f2fd;
+  border-left: 4px solid #0066cc;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0.5rem;
+}
+
+.medical-quote p {
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+/* Pain Points Grid */
+.pain-points {
+  margin: 3rem 0;
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.pain-item {
+  background: rgba(31, 41, 55, 0.5);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pain-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.2);
+  border-color: rgba(0, 245, 255, 0.5);
+}
+
+.pain-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.pain-item h4 {
+  color: #00f5ff;
+  margin-bottom: 1rem;
+}
+
+.pain-item p {
+  color: #d1d5db;
+}
+
+/* Solution Features */
+.solution-features {
+  margin: 2rem 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #00f5ff, #0ea5e9);
+  color: #0a0a0a;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feature-content h4 {
+  color: #00f5ff;
+  margin-bottom: 0.5rem;
+}
+
+.feature-content p {
+  color: #d1d5db;
+}
+
+/* Implementation Timeline */
+.implementation-timeline {
+  margin: 3rem 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  border-left: 4px solid #00f5ff;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.timeline-marker {
+  background: linear-gradient(135deg, #00f5ff, #0ea5e9);
+  color: #0a0a0a;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.timeline-content h4 {
+  color: #00f5ff;
+  margin-bottom: 1rem;
+}
+
+.timeline-content p {
+  color: #d1d5db;
+}
+
+.timeline-content ul {
+  color: #d1d5db;
+}
+
+.timeline-content ul {
+  margin-top: 1rem;
+}
+
+/* Results Grid */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.result-card {
+  background: white;
+  border: 2px solid #00c851;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 200, 81, 0.15);
+}
+
+.result-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #00c851;
+  margin-bottom: 0.5rem;
+}
+
+.result-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.result-improvement {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Impact Sections */
+.impact-section {
+  margin: 2rem 0;
+}
+
+.impact-section h4 {
+  color: #00f5ff;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgba(75, 85, 99, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.impact-section ul {
+  color: #d1d5db;
+}
+
+.impact-section li strong {
+  color: #00f5ff;
+}
+
+/* Testimonials */
+.testimonials-section {
+  background: rgba(31, 41, 55, 0.3);
+  padding: 3rem;
+  border-radius: 1rem;
+  margin: 3rem 0;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.testimonials-section h2 {
+  color: #00f5ff;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.testimonial-card {
+  background: rgba(17, 24, 39, 0.5);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.testimonial-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.testimonial-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-content blockquote {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  font-style: italic;
+}
+
+.testimonial-content blockquote p {
+  color: #f3f4f6;
+  font-size: 1rem;
+}
+
+.testimonial-content cite {
+  font-style: normal;
+  color: #00f5ff;
+  font-weight: 600;
+}
+
+/* Technical Specifications */
+.tech-specs {
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.spec-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+  color: #d1d5db;
+}
+
+.spec-item:last-child {
+  border-bottom: none;
+}
+
+.spec-item strong {
+  color: #00f5ff;
+}
+
+/* Future Plans */
+.future-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.plan-item {
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border-left: 4px solid #00f5ff;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.plan-item h4 {
+  color: #00f5ff;
+  margin-bottom: 1rem;
+}
+
+.plan-item p {
+  color: #d1d5db;
+}
+
+/* Case Study CTA */
+.case-study-cta {
+  background: linear-gradient(135deg, #00f5ff, #0ea5e9);
+  color: #0a0a0a;
+  padding: 3rem;
+  border-radius: 1rem;
+  text-align: center;
+  margin: 3rem 0;
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+}
+
+.case-study-cta h3 {
+  color: #0a0a0a;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.case-study-cta p {
+  color: #1f2937;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.cta-primary, .cta-secondary {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.cta-primary {
+  background: #0a0a0a;
+  color: #00f5ff;
+  border: 2px solid #0a0a0a;
+}
+
+.cta-primary:hover {
+  background: #1f2937;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.cta-secondary {
+  background: transparent;
+  color: #0a0a0a;
+  border: 2px solid #0a0a0a;
+}
+
+.cta-secondary:hover {
+  background: #0a0a0a;
+  color: #00f5ff;
+}
+
+/* Mobile Responsiveness for Case Study */
+@media (max-width: 768px) {
+  .hero-stats {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .challenge-metrics {
+    flex-direction: column;
+  }
+  
+  .pain-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-primary, .cta-secondary {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .prose h2 {
+    font-size: 1.5rem;
+  }
+  
+  .prose h3 {
+    font-size: 1.25rem;
+  }
+  
+  .prose .lead {
+    font-size: 1.1rem;
+  }
+}
+
+/* FinanceFirst Case Study Premium Styling - Dark Theme */
+.finance-case-study-content {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  color: #e5e7eb;
+  background: #0a0a0a;
+}
+
+/* Finance Hero Stats Overlay */
+.finance-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #1A237E, #3949AB);
+  border-radius: 1rem;
+  color: white;
+  box-shadow: 0 0 40px rgba(26, 35, 126, 0.4);
+}
+
+.finance-stat-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.finance-stat-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #FFB300;
+  display: block;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 179, 0, 0.3);
+}
+
+.finance-stat-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+  color: #E8EAF6;
+}
+
+/* Finance Executive Summary */
+.finance-executive-summary {
+  background: rgba(26, 35, 126, 0.1);
+  padding: 3rem;
+  border-radius: 1rem;
+  margin: 3rem 0;
+  border-left: 4px solid #1A237E;
+  border: 1px solid rgba(26, 35, 126, 0.3);
+}
+
+.finance-summary-highlights {
+  margin-top: 2rem;
+}
+
+.finance-highlight-item {
+  background: rgba(26, 35, 126, 0.15);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  border-left: 3px solid #FFB300;
+  color: #f3f4f6;
+}
+
+/* Finance Challenge Metrics */
+.finance-challenge-metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.finance-metric-item {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid #F44336;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  flex: 1;
+  min-width: 180px;
+}
+
+.finance-metric-item.negative {
+  background: rgba(244, 67, 54, 0.1);
+  border-color: #F44336;
+}
+
+.finance-metric-item.positive {
+  background: rgba(0, 230, 118, 0.1);
+  border-color: #00E676;
+}
+
+.finance-metric-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #F44336;
+  margin-bottom: 0.5rem;
+}
+
+.finance-metric-item.positive .finance-metric-value {
+  color: #00E676;
+}
+
+.finance-metric-desc {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+/* Finance Quote Styling */
+.finance-quote {
+  background: rgba(26, 35, 126, 0.1);
+  border-left: 4px solid #1A237E;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(26, 35, 126, 0.3);
+}
+
+.finance-quote p {
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #f3f4f6;
+}
+
+.finance-quote cite {
+  color: #FFB300;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Finance Industry Context */
+.finance-industry-context {
+  margin: 3rem 0;
+}
+
+.finance-threat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.finance-threat-item {
+  background: rgba(31, 41, 55, 0.5);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.finance-threat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 35, 126, 0.3);
+  border-color: rgba(26, 35, 126, 0.5);
+}
+
+.finance-threat-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.finance-threat-item h4 {
+  color: #1A237E;
+  margin-bottom: 1rem;
+}
+
+.finance-threat-item p {
+  color: #d1d5db;
+}
+
+/* Finance Solution Features */
+.finance-solution-features {
+  margin: 2rem 0;
+}
+
+.finance-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.finance-feature-icon {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #1A237E, #3949AB);
+  color: #FFB300;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.finance-feature-content h4 {
+  color: #1A237E;
+  margin-bottom: 0.5rem;
+}
+
+.finance-feature-content p {
+  color: #d1d5db;
+}
+
+/* Finance Results Grid */
+.finance-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.finance-result-card {
+  background: rgba(31, 41, 55, 0.5);
+  border: 2px solid #00E676;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.finance-result-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FFB300, #00E676);
+}
+
+.finance-result-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 230, 118, 0.2);
+}
+
+.finance-result-number {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #FFB300;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 179, 0, 0.3);
+}
+
+.finance-result-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f3f4f6;
+  margin-bottom: 0.5rem;
+}
+
+.finance-result-improvement {
+  font-size: 0.9rem;
+  color: #00E676;
+  font-weight: 500;
+}
+
+/* Finance Testimonials */
+.finance-testimonials-section {
+  background: rgba(31, 41, 55, 0.3);
+  padding: 3rem;
+  border-radius: 1rem;
+  margin: 3rem 0;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.finance-testimonials-section h2 {
+  color: #1A237E;
+}
+
+.finance-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.finance-testimonial-card {
+  background: rgba(17, 24, 39, 0.5);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  position: relative;
+}
+
+.finance-testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1A237E, #FFB300);
+  border-radius: 1rem 1rem 0 0;
+}
+
+.finance-testimonial-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 3px solid #FFB300;
+}
+
+.finance-testimonial-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.finance-testimonial-content blockquote {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  font-style: italic;
+}
+
+.finance-testimonial-content blockquote p {
+  color: #f3f4f6;
+  font-size: 1rem;
+}
+
+.finance-testimonial-content cite {
+  font-style: normal;
+  color: #1A237E;
+  font-weight: 600;
+}
+
+/* Finance CTA */
+.finance-case-study-cta {
+  background: linear-gradient(135deg, #1A237E, #3949AB);
+  color: white;
+  padding: 3rem;
+  border-radius: 1rem;
+  text-align: center;
+  margin: 3rem 0;
+  box-shadow: 0 0 40px rgba(26, 35, 126, 0.4);
+}
+
+.finance-case-study-cta h3 {
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.finance-case-study-cta p {
+  color: #E8EAF6;
+}
+
+.finance-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.finance-cta-primary, .finance-cta-secondary {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.finance-cta-primary {
+  background: #FFB300;
+  color: #1A237E;
+  border: 2px solid #FFB300;
+}
+
+.finance-cta-primary:hover {
+  background: #FFC107;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 179, 0, 0.4);
+}
+
+.finance-cta-secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.finance-cta-secondary:hover {
+  background: white;
+  color: #1A237E;
+}
+
+/* Mobile Responsiveness for Finance Case Study */
+@media (max-width: 768px) {
+  .finance-hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .finance-stat-number {
+    font-size: 2.5rem;
+  }
+  
+  .finance-challenge-metrics {
+    flex-direction: column;
+  }
+  
+  .finance-threat-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .finance-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .finance-testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .finance-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .finance-cta-primary, .finance-cta-secondary {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* ManufacturePro Case Study Premium Styling - Industrial Dark Theme */
+.manufacturing-case-study-content {
+  font-family: 'Roboto Condensed', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  color: #e5e7eb;
+  background: #0a0a0a;
+}
+
+/* Manufacturing Hero Stats Overlay */
+.manufacturing-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #004D40, #00695C);
+  border-radius: 1rem;
+  color: white;
+  box-shadow: 0 0 40px rgba(0, 77, 64, 0.4);
+}
+
+.manufacturing-stat-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.manufacturing-stat-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #FFC107;
+  display: block;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+}
+
+.manufacturing-stat-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+  color: #E0F2F1;
+}
+
+/* Manufacturing Executive Summary */
+.manufacturing-executive-summary {
+  background: rgba(0, 77, 64, 0.1);
+  padding: 3rem;
+  border-radius: 1rem;
+  margin: 3rem 0;
+  border-left: 4px solid #004D40;
+  border: 1px solid rgba(0, 77, 64, 0.3);
+}
+
+.manufacturing-summary-highlights {
+  margin-top: 2rem;
+}
+
+.manufacturing-highlight-item {
+  background: rgba(0, 77, 64, 0.15);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  border-left: 3px solid #FFC107;
+  color: #f3f4f6;
+}
+
+/* Manufacturing Challenge Metrics */
+.manufacturing-challenge-metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.manufacturing-metric-item {
+  background: rgba(211, 47, 47, 0.1);
+  border: 1px solid #D32F2F;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  flex: 1;
+  min-width: 180px;
+}
+
+.manufacturing-metric-item.negative {
+  background: rgba(211, 47, 47, 0.1);
+  border-color: #D32F2F;
+}
+
+.manufacturing-metric-item.positive {
+  background: rgba(76, 175, 80, 0.1);
+  border-color: #4CAF50;
+}
+
+.manufacturing-metric-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #D32F2F;
+  margin-bottom: 0.5rem;
+}
+
+.manufacturing-metric-item.positive .manufacturing-metric-value {
+  color: #4CAF50;
+}
+
+.manufacturing-metric-desc {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+/* Manufacturing Quote Styling */
+.manufacturing-quote {
+  background: rgba(0, 77, 64, 0.1);
+  border-left: 4px solid #004D40;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 77, 64, 0.3);
+}
+
+.manufacturing-quote p {
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #f3f4f6;
+}
+
+.manufacturing-quote cite {
+  color: #FFC107;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Manufacturing Industry Context */
+.manufacturing-industry-context {
+  margin: 3rem 0;
+}
+
+.manufacturing-challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.manufacturing-challenge-item {
+  background: rgba(31, 41, 55, 0.5);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.manufacturing-challenge-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 77, 64, 0.3);
+  border-color: rgba(0, 77, 64, 0.5);
+}
+
+.manufacturing-challenge-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.manufacturing-challenge-item h4 {
+  color: #004D40;
+  margin-bottom: 1rem;
+}
+
+.manufacturing-challenge-item p {
+  color: #d1d5db;
+}
+
+/* Manufacturing Solution Features */
+.manufacturing-solution-features {
+  margin: 2rem 0;
+}
+
+.manufacturing-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.manufacturing-feature-icon {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #004D40, #00695C);
+  color: #FFC107;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.manufacturing-feature-content h4 {
+  color: #004D40;
+  margin-bottom: 0.5rem;
+}
+
+.manufacturing-feature-content p {
+  color: #d1d5db;
+}
+
+/* Manufacturing Implementation Timeline */
+.manufacturing-implementation-timeline {
+  margin: 3rem 0;
+}
+
+.manufacturing-timeline-item {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  border-left: 4px solid #004D40;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.manufacturing-timeline-marker {
+  background: linear-gradient(135deg, #004D40, #00695C);
+  color: #FFC107;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.manufacturing-timeline-content h4 {
+  color: #004D40;
+  margin-bottom: 1rem;
+}
+
+.manufacturing-timeline-content p {
+  color: #d1d5db;
+}
+
+.manufacturing-timeline-content ul {
+  color: #d1d5db;
+  margin-top: 1rem;
+}
+
+/* Manufacturing Results Grid */
+.manufacturing-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.manufacturing-result-card {
+  background: rgba(31, 41, 55, 0.5);
+  border: 2px solid #4CAF50;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.manufacturing-result-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FFC107, #4CAF50);
+}
+
+.manufacturing-result-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2);
+}
+
+.manufacturing-result-number {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #FFC107;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+}
+
+.manufacturing-result-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f3f4f6;
+  margin-bottom: 0.5rem;
+}
+
+.manufacturing-result-improvement {
+  font-size: 0.9rem;
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+/* Manufacturing Impact Sections */
+.manufacturing-impact-section {
+  margin: 2rem 0;
+}
+
+.manufacturing-impact-section h4 {
+  color: #004D40;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgba(75, 85, 99, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.manufacturing-impact-section ul {
+  color: #d1d5db;
+}
+
+.manufacturing-impact-section li strong {
+  color: #FFC107;
+}
+
+/* Manufacturing Testimonials */
+.manufacturing-testimonials-section {
+  background: rgba(31, 41, 55, 0.3);
+  padding: 3rem;
+  border-radius: 1rem;
+  margin: 3rem 0;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.manufacturing-testimonials-section h2 {
+  color: #004D40;
+}
+
+.manufacturing-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.manufacturing-testimonial-card {
+  background: rgba(17, 24, 39, 0.5);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  position: relative;
+}
+
+.manufacturing-testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #004D40, #FFC107);
+  border-radius: 1rem 1rem 0 0;
+}
+
+.manufacturing-testimonial-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 3px solid #FFC107;
+}
+
+.manufacturing-testimonial-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.manufacturing-testimonial-content blockquote {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  font-style: italic;
+}
+
+.manufacturing-testimonial-content blockquote p {
+  color: #f3f4f6;
+  font-size: 1rem;
+}
+
+.manufacturing-testimonial-content cite {
+  font-style: normal;
+  color: #004D40;
+  font-weight: 600;
+}
+
+/* Manufacturing Technical Specifications */
+.manufacturing-tech-specs {
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.manufacturing-spec-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+  color: #d1d5db;
+}
+
+.manufacturing-spec-item:last-child {
+  border-bottom: none;
+}
+
+.manufacturing-spec-item strong {
+  color: #FFC107;
+}
+
+/* Manufacturing Compliance Badges */
+.manufacturing-compliance-badges {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.manufacturing-badge {
+  background: linear-gradient(135deg, #004D40, #00695C);
+  color: #FFC107;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Manufacturing Future Plans */
+.manufacturing-future-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.manufacturing-plan-item {
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border-left: 4px solid #004D40;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.manufacturing-plan-item h4 {
+  color: #004D40;
+  margin-bottom: 1rem;
+}
+
+.manufacturing-plan-item p {
+  color: #d1d5db;
+}
+
+/* Manufacturing CTA */
+.manufacturing-case-study-cta {
+  background: linear-gradient(135deg, #004D40, #00695C);
+  color: white;
+  padding: 3rem;
+  border-radius: 1rem;
+  text-align: center;
+  margin: 3rem 0;
+  box-shadow: 0 0 40px rgba(0, 77, 64, 0.4);
+}
+
+.manufacturing-case-study-cta h3 {
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.manufacturing-case-study-cta p {
+  color: #E0F2F1;
+}
+
+.manufacturing-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.manufacturing-cta-primary, .manufacturing-cta-secondary {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.manufacturing-cta-primary {
+  background: #FFC107;
+  color: #004D40;
+  border: 2px solid #FFC107;
+}
+
+.manufacturing-cta-primary:hover {
+  background: #FFD54F;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+}
+
+.manufacturing-cta-secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.manufacturing-cta-secondary:hover {
+  background: white;
+  color: #004D40;
+}
+
+/* Mobile Responsiveness for Manufacturing Case Study */
+@media (max-width: 768px) {
+  .manufacturing-hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .manufacturing-stat-number {
+    font-size: 2.5rem;
+  }
+  
+  .manufacturing-challenge-metrics {
+    flex-direction: column;
+  }
+  
+  .manufacturing-challenge-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .manufacturing-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .manufacturing-testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .manufacturing-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .manufacturing-cta-primary, .manufacturing-cta-secondary {
+    width: 100%;
+    max-width: 300px;
+  }
+}

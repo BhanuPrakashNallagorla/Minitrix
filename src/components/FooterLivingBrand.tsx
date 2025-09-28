@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import { post } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const FooterLivingBrand = () => {
+interface FooterLivingBrandProps {
+  onNavigate?: (page: 'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries') => void;
+}
+
+const FooterLivingBrand = ({ onNavigate }: FooterLivingBrandProps) => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -68,6 +72,14 @@ const FooterLivingBrand = () => {
     ease: "easeInOut" as const, // Smooth animation easing
   };
 
+  // Navigation handler for footer links
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, page?: 'home' | 'blog' | 'services' | 'usecases' | 'about' | 'industries') => {
+    if (page && onNavigate) {
+      e.preventDefault();
+      onNavigate(page);
+    }
+  };
+
   return (
     <footer className="footer footer--living-brand">
       {/* Large wordmark backdrop */}
@@ -128,16 +140,22 @@ const FooterLivingBrand = () => {
             </div>
           )}
           
-          <a className="btn-accent" href="/contact">Schedule a Consultation</a>
+          <a className="btn-accent" href="#contact-section" onClick={(e) => {
+            e.preventDefault();
+            const contactSection = document.getElementById('contact-section');
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}>Schedule a Consultation</a>
         </section>
 
         {/* Company Navigation */}
         <nav className="footer__col" aria-label="Company">
           <h3>Company</h3>
           <ul>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/careers">Careers</a></li>
+            <li><a href="/about" className="footer__link--enhanced" onClick={(e) => handleLinkClick(e, 'about')}>About Us</a></li>
+            <li><a href="/blog" className="footer__link--enhanced" onClick={(e) => handleLinkClick(e, 'blog')}>Blog</a></li>
+            <li><a href="https://careers.minitrix.ai" className="footer__link--enhanced" target="_blank" rel="noopener noreferrer">Careers</a></li>
           </ul>
         </nav>
 
@@ -145,9 +163,9 @@ const FooterLivingBrand = () => {
         <nav className="footer__col" aria-label="Solutions">
           <h3>Solutions</h3>
           <ul>
-            <li><a href="/services">Services</a></li>
-            <li><a href="/use-cases">Use Cases</a></li>
-            <li><a href="/industries">Industries</a></li>
+            <li><a href="/services" className="footer__link--enhanced" onClick={(e) => handleLinkClick(e, 'services')}>Services</a></li>
+            <li><a href="/use-cases" className="footer__link--enhanced" onClick={(e) => handleLinkClick(e, 'usecases')}>Use Cases</a></li>
+            <li><a href="/industries" className="footer__link--enhanced" onClick={(e) => handleLinkClick(e, 'industries')}>Industries</a></li>
           </ul>
         </nav>
 
@@ -155,13 +173,10 @@ const FooterLivingBrand = () => {
         <nav className="footer__col" aria-label="Resources">
           <h3>Resources</h3>
           <ul>
-            <li><a href="/case-studies">Case Studies</a></li>
-            <li><a href="/trust">Trust Center</a></li>
-            <li><a href="mailto:hello@minitrix.ai">hello@minitrix.ai</a></li>
-            <li>
-              <a href="tel:+15551234567">+1 (555) 123‑4567</a>{' '}
-              <small>Mon–Fri • 9–6 PST</small>
-            </li>
+            <li><a href="https://docs.minitrix.ai/case-studies" className="footer__link--enhanced" target="_blank" rel="noopener noreferrer">Case Studies</a></li>
+            <li><a href="https://trust.minitrix.ai" className="footer__link--enhanced" target="_blank" rel="noopener noreferrer">Trust Center</a></li>
+            <li><a href="mailto:hello@minitrix.ai" className="footer__link--enhanced">hello@minitrix.ai</a></li>
+            
           </ul>
         </nav>
       </div>
@@ -170,10 +185,10 @@ const FooterLivingBrand = () => {
       <div className="footer__legal">
         <p>© 2025 Minitrix. All rights reserved.</p>
         <ul className="footer__links" aria-label="Legal">
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/terms">Terms</a></li>
-          <li><a href="/cookie-settings">Cookie Settings</a></li>
-          <li><a href="/accessibility">Accessibility</a></li>
+          <li><a href="https://minitrix.ai/privacy" className="footer__link--enhanced" target="_blank" rel="noopener noreferrer">Privacy</a></li>
+          <li><a href="https://minitrix.ai/terms" className="footer__link--enhanced" target="_blank" rel="noopener noreferrer">Terms</a></li>
+          <li><a href="https://minitrix.ai/cookie-settings" className="footer__link--enhanced" target="_blank" rel="noopener noreferrer">Cookie Settings</a></li>
+          <li><a href="https://minitrix.ai/accessibility" className="footer__link--enhanced" target="_blank" rel="noopener noreferrer">Accessibility</a></li>
         </ul>
       </div>
     </footer>
