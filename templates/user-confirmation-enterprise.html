@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Thank you • {{siteName}}</title>
+  <style>
+    /* Reset */
+    html, body { margin:0; padding:0; height:100%; }
+    img { border:0; line-height:100%; text-decoration:none; -ms-interpolation-mode:bicubic; display:block; }
+    table { border-collapse:collapse; }
+    a { text-decoration:none; }
+
+    /* Layout */
+    .bg { width:100% !important; background:#F8F9FA; }
+    .container { width:100%; max-width:640px; margin:0 auto; background:#FFFFFF; border:1px solid #E9ECEF; border-radius:14px; overflow:hidden; box-shadow:0 6px 24px rgba(0,0,0,0.06); }
+
+    /* Header */
+    .header { padding:20px 24px; border-bottom:1px solid #E9ECEF; background:#FFFFFF; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .brand-logo { width:120px; height:auto; }
+    .brand-name { font:800 24px/1.2 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#0F172A; }
+    .gradient-text-animated { background: linear-gradient(45deg, #ffffff, #06b6d4, #3b82f6, #ffffff); background-size: 400% 400%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: gradient-shift 3s ease infinite; }
+    @keyframes gradient-shift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+    /* Content */
+    .hero { background: linear-gradient(180deg, #F8FBFF 0%, #FFFFFF 100%); padding:32px 24px 16px 24px; text-align:left; }
+    .title { font:700 24px/1.35 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#2D3748; margin:0 0 8px 0; }
+    .subtitle { font:400 16px/1.7 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#718096; margin:0; }
+
+    .section { padding:24px; }
+    .h2 { font:600 18px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#4A5568; margin:0 0 8px 0; }
+    .text { font:400 16px/1.7 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#111827; }
+
+    /* Buttons */
+    .btn { display:inline-block; background:#0066CC; border:1px solid #0066CC; color:#FFFFFF !important; padding:14px 22px; border-radius:12px; font:600 16px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+
+    /* Footer */
+    .footer { color:#94A3B8; font:400 12px/1.7 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; padding:24px; border-top:1px solid #E9ECEF; text-align:center; }
+
+    /* Mobile */
+    @media only screen and (max-width:600px){
+      .container { border-radius:0; }
+      .btn { display:block; width:100% !important; text-align:center; }
+    }
+
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      .bg { background:#0B1220 !important; }
+      .container { background:#0F172A !important; border-color:#1E293B !important; }
+      .header { background:#0F172A !important; border-color:#1E293B !important; }
+      .title { color:#E2E8F0 !important; }
+      .subtitle, .text { color:#E2E8F0 !important; }
+      .footer { color:#94A3B8 !important; border-color:#1E293B !important; }
+      .hero { background: linear-gradient(180deg, #0B1220 0%, #0F172A 100%) !important; }
+    }
+  </style>
+</head>
+<body class="bg" style="margin:0; padding:0; background:#F8F9FA;">
+  <!-- Hidden preheader text -->
+  <div style="display:none;font-size:1px;color:#fff;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">Thank you for contacting {{siteName}} — we'll be in touch shortly.</div>
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="bg" style="background:#F8F9FA;">
+    <tr>
+      <td align="center" style="padding:24px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="container">
+          <!-- Header -->
+          <tr>
+            <td class="header" style="padding:20px 24px; border-bottom:1px solid #E9ECEF; background:#FFFFFF;">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td align="left" style="vertical-align:middle;">
+                    <table role="presentation">
+                      <tr>
+                        <td style="vertical-align:middle;">
+                          <img src="{{logoUrl}}" width="120" height="32" alt="{{siteName}}" class="brand-logo" style="display:block; max-width:120px; height:auto;" />
+                        </td>
+                        <td style="padding-left:12px; vertical-align:middle;" class="brand-name">
+                          <span class="gradient-text-animated">{{siteName}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Hero -->
+          <tr>
+            <td class="hero">
+              <h1 class="title">Thank you, {{fullName}}!</h1>
+              <p class="subtitle">We've received your message. Our team will get back to you shortly.</p>
+            </td>
+          </tr>
+
+          <!-- Next Steps -->
+          <tr>
+            <td class="section">
+              <div class="h2">What happens next?</div>
+              <div class="text">A member of our team will review your request and reach out within the next business day. If you’d like to schedule time now, use the button below.</div>
+              <div style="height:16px"></div>
+              <!--[if mso]>
+              <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{ctaUrl}}" style="height:48px;v-text-anchor:middle;width:220px;" arcsize="10%" strokecolor="#0066CC" fillcolor="#0066CC">
+                <w:anchorlock/>
+                <center style="color:#ffffff;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;font-size:16px;font-weight:600;">Book a Call</center>
+              </v:roundrect>
+              <![endif]-->
+              <!--[if !mso]><!-- -->
+              <a class="btn" href="{{ctaUrl}}" style="display:inline-block;background:#0066CC;border:1px solid #0066CC;color:#FFFFFF !important;padding:14px 22px;border-radius:12px;font:600 16px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">Book a Call</a>
+              <!--<![endif]-->
+            </td>
+          </tr>
+
+          <!-- Company Intro -->
+          <tr>
+            <td class="section">
+              <div class="h2">About {{siteName}}</div>
+              <div class="text">We build enterprise-grade Small Language Models and AI solutions that are private, fast, and cost-efficient. Expect the performance of premium AI—without the heavy price tags or data concerns.</div>
+            </td>
+          </tr>
+
+          <!-- Signature -->
+          <tr>
+            <td class="section">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td style="width:56px; vertical-align:top;">
+                    <img src="{{agentPhotoUrl}}" width="48" height="48" style="border-radius:999px;" alt="Team Member" />
+                  </td>
+                  <td style="vertical-align:top; padding-left:12px;">
+                    <div class="text" style="font-weight:600;">{{agentName}} · {{agentTitle}}</div>
+                    <div class="text" style="color:#718096;">{{supportEmail}} · {{supportPhone}}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td class="footer">
+              <div style="margin-bottom:6px;">© {{year}} {{siteName}} • All rights reserved</div>
+              <div>{{brandAddress}}</div>
+              <div style="margin-top:10px;">
+                <a href="{{websiteUrl}}" style="color:#0066CC;">Website</a> ·
+                <a href="{{linkedinUrl}}" style="color:#0066CC;">LinkedIn</a> ·
+                <a href="{{twitterUrl}}" style="color:#0066CC;">Twitter</a>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

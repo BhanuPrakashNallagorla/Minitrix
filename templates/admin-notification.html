@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>New Contact - {{siteName}}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: #0b1220; color: #e6eefc; }
+    .container { max-width: 720px; margin: 0 auto; padding: 24px; background: #0f172a; border: 1px solid #1f2a44; border-radius: 12px; }
+    .muted { color: #9fb0d1; }
+    .box { background: #0b1220; border: 1px solid #1f2a44; padding: 12px; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 6px 8px; border-bottom: 1px solid #1f2a44; vertical-align: top; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>New Contact Submission</h2>
+    <table>
+      <tr><td><strong>Name</strong></td><td>{{fullName}}</td></tr>
+      <tr><td><strong>Email</strong></td><td>{{email}}</td></tr>
+      <tr><td><strong>Company</strong></td><td>{{company}}</td></tr>
+      <tr><td><strong>Role</strong></td><td>{{role}}</td></tr>
+      <tr><td><strong>Phone</strong></td><td>{{phone}}</td></tr>
+      <tr><td><strong>Country</strong></td><td>{{countryName}}</td></tr>
+      <tr><td><strong>Project Details</strong></td><td class="box">{{projectDetails}}</td></tr>
+      <tr><td><strong>Additional Info</strong></td><td class="box">{{additionalInfo}}</td></tr>
+      <tr><td><strong>IP</strong></td><td>{{ip}}</td></tr>
+      <tr><td><strong>User Agent</strong></td><td>{{userAgent}}</td></tr>
+      <tr><td><strong>Timestamp</strong></td><td>{{ts}}</td></tr>
+    </table>
+  </div>
+</body>
+</html>

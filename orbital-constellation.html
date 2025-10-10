@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbital Constellation - SLM Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0B0F14;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #labels {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .hotspot-label {
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        #controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-button {
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid #00FFFF;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            background: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00FFFF;
+            font-size: 18px;
+            z-index: 1000;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reduced-motion {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hotspot-label {
+                font-size: 12px;
+            }
+            
+            #controls {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .control-button {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="canvas-container"></div>
+        <div id="labels"></div>
+        <div id="controls">
+            <button class="control-button" id="pauseBtn">Pause</button>
+            <button class="control-button" id="resetBtn">Reset View</button>
+        </div>
+        <div id="loading">Loading Constellation...</div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.180.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.180.0/examples/jsm/",
+            "dat.gui": "https://unpkg.com/dat.gui@0.7.9/build/dat.gui.module.js"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+        import * as dat from 'dat.gui';
+
+        /**
+         * Orbital Constellation Visualization
+         * A Three.js implementation of a sovereign AI constellation
+         * with central core, orbital paths, and animated pods
+         */
+
+        class OrbitalConstellation {
+            constructor() {
+                this.container = document.getElementById('canvas-container');
+                this.labelsContainer = document.getElementById('labels');
+                this.loading = document.getElementById('loading');
+                
+                // Animation state
+                this.isAnimating = true;
+                this.isPaused = false;
+                this.clock = new THREE.Clock();
+                this.deltaTime = 0;
+                
+                // Scene objects
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.composer = null;
+                this.controls = null;
+                this.labelRenderer = null;
+                
+                // Constellation objects
+                this.centralCore = null;
+                this.orbitalPaths = [];
+                this.pods = [];
+                this.labels = [];
+                this.orbitalGroups = [];
+                this.orbitCurves = [];
+                
+                // Animation parameters
+                this.coreScale = 1.0;
+                this.constellation = null; // Root group for Y-axis rotation
+                
+                // Performance settings
+                this.targetFPS = 60;
+                this.minFPS = 30;
+                this.lastFrameTime = 0;
+                
+                // GUI controls
+                this.gui = null;
+                this.bloomPass = null;
+                
+                // Camera presets and model controls
+                this.cameraPresets = {
+                    'Front Bottom': { position: [0, -2.5, 6], name: 'Front Bottom' },
+                    'Front Center': { position: [0, 0, 8], name: 'Front Center' },
+                    'Top View': { position: [0, 8, 0], name: 'Top View' },
+                    'Side View': { position: [8, 0, 0], name: 'Side View' },
+                    'Angled View': { position: [2.5, 1.8, 6.5], name: 'Angled View' },
+                    'Close Up': { position: [1, -1, 4], name: 'Close Up' }
+                };
+                this.currentCameraPreset = 'Front Bottom';
+                
+                // Model tilt controls
+                this.modelTilt = {
+                    x: 0,
+                    y: 0,
+                    z: -15 // Current right tilt
+                };
+                
+                this.init();
+            }
+
+            /**
+             * Initialize the entire constellation system
+             */
+            async init() {
+                try {
+                    this.setupScene();
+                    this.setupCamera();
+                    this.setupRenderer();
+                    this.setupLighting();
+                    this.setupPostProcessing();
+                    this.setupControls();
+                    
+                    await this.createConstellation();
+                    
+                    this.setupEventListeners();
+                    this.setupGUI();
+                    this.updateModelTilt(); // Apply initial tilt
+                    this.handleResize();
+                    
+                    // Hide loading and start animation
+                    this.loading.style.display = 'none';
+                    this.animate();
+                    
+                } catch (error) {
+                    console.error('Failed to initialize constellation:', error);
+                    this.loading.textContent = 'Failed to load constellation';
+                }
+            }
+
+            /**
+             * Set up the Three.js scene
+             */
+            setupScene() {
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0B0F14);
+                this.scene.fog = new THREE.Fog(0x0B0F14, 10, 50);
+                
+                // Create root constellation group for Y-axis rotation only
+                this.constellation = new THREE.Group();
+                this.constellation.name = 'constellation';
+                this.scene.add(this.constellation);
+            }
+
+            /**
+             * Set up the camera with proper positioning
+             */
+            setupCamera() {
+                const aspect = window.innerWidth / window.innerHeight;
+                this.camera = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000);
+                this.camera.position.set(0, -2.5, 6);
+                this.camera.up.set(0, 1, 0);
+                this.camera.lookAt(0, 0, 0);
+            }
+
+            /**
+             * Set up the WebGL renderer with optimal settings
+             */
+            setupRenderer() {
+                this.renderer = new THREE.WebGLRenderer({
+                    antialias: true,
+                    alpha: false,
+                    powerPreference: "high-performance"
+                });
+                
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.physicallyCorrectLights = true;
+                this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.2;
+                
+                this.container.appendChild(this.renderer.domElement);
+
+                // CSS2D Renderer for labels
+                this.labelRenderer = new CSS2DRenderer();
+                this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
+                this.labelRenderer.domElement.style.position = 'absolute';
+                this.labelRenderer.domElement.style.top = '0px';
+                this.labelRenderer.domElement.style.pointerEvents = 'none';
+                this.container.appendChild(this.labelRenderer.domElement);
+            }
+
+            /**
+             * Set up minimal lighting for the scene
+             */
+            setupLighting() {
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.1);
+                this.scene.add(ambientLight);
+            }
+
+            /**
+             * Set up post-processing effects including bloom
+             */
+            setupPostProcessing() {
+                this.composer = new EffectComposer(this.renderer);
+                
+                const renderPass = new RenderPass(this.scene, this.camera);
+                this.composer.addPass(renderPass);
+                
+                const bloomPass = new UnrealBloomPass(
+                    new THREE.Vector2(window.innerWidth, window.innerHeight),
+                    0.8,    // strength
+                    0.45,   // radius
+                    0.18    // threshold
+                );
+                
+                this.bloomPass = bloomPass; // Store reference for GUI controls
+                this.composer.addPass(bloomPass);
+            }
+
+            /**
+             * Set up orbit controls for camera interaction
+             */
+            setupControls() {
+                this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.enableDamping = true;
+                this.controls.dampingFactor = 0.05;
+                this.controls.enablePan = false;
+                this.controls.minDistance = 3;
+                this.controls.maxDistance = 12;
+                this.controls.minPolarAngle = Math.PI * 0.1;
+                this.controls.maxPolarAngle = Math.PI * 0.9;
+            }
+
+            /**
+             * Create the complete constellation system
+             */
+            async createConstellation() {
+                await this.createCentralCore();
+                await this.createOrbitalPaths();
+                await this.createPods();
+                this.createLabels();
+            }
+
+            /**
+             * Create the central core with gradient shader
+             */
+            async createCentralCore() {
+                const geometry = new THREE.SphereGeometry(0.8, 64, 64);
+                
+                // Custom shader material for radial gradient
+                const material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        time: { value: 0 },
+                        innerColor: { value: new THREE.Color(0x66F6FF) }, // cyan center
+                        outerColor: { value: new THREE.Color(0xA45CFF) }  // magenta rim
+                    },
+                    vertexShader: `
+                        varying vec2 vUv;
+                        varying vec3 vPosition;
+                        
+                        void main() {
+                            vUv = uv;
+                            vPosition = position;
+                            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                        }
+                    `,
+                    fragmentShader: `
+                        uniform float time;
+                        uniform vec3 innerColor;
+                        uniform vec3 outerColor;
+                        varying vec2 vUv;
+                        varying vec3 vPosition;
+                        
+                        void main() {
+                            vec2 center = vec2(0.5, 0.5);
+                            float dist = distance(vUv, center);
+                            
+                            // Create radial gradient
+                            float gradient = smoothstep(0.0, 0.8, dist);
+                            vec3 color = mix(innerColor, outerColor, gradient);
+                            
+                            // Add gentle pulsing effect
+                            float pulse = sin(time * 1.5) * 0.05 + 0.95;
+                            color *= pulse;
+                            
+                            // Emissive for bloom
+                            color *= 1.2;
+                            
+                            gl_FragColor = vec4(color, 1.0);
+                        }
+                    `,
+                    transparent: false
+                });
+
+                this.centralCore = new THREE.Mesh(geometry, material);
+                this.constellation.add(this.centralCore);
+            }
+
+            /**
+             * Create three orbital paths with exact reference image angles
+             */
+            async createOrbitalPaths() {
+                const pathRadius = 2.8;
+                const pathSegments = 128;
+                const tubeRadius = 0.008;
+                const tubeSegments = 8;
+                
+                // Define the three orbital planes that intersect at poles with angular separation
+                const orbitConfigs = [
+                    { 
+                        name: 'OrbitA', 
+                        rotation: { x: Math.PI / 2, y: 0, z: 0 }  // YZ plane (vertical ring)
+                    },
+                    { 
+                        name: 'OrbitB', 
+                        rotation: { 
+                            x: Math.PI / 2, 
+                            y: 0, 
+                            z: THREE.MathUtils.degToRad(60) 
+                        }  // YZ plane rotated 60° around Z-axis
+                    },
+                    { 
+                        name: 'OrbitC', 
+                        rotation: { 
+                            x: Math.PI / 2, 
+                            y: 0, 
+                            z: THREE.MathUtils.degToRad(120) 
+                        }  // YZ plane rotated 120° around Z-axis
+                    }
+                ];
+                
+                this.orbitCurves = []; // Store curves for pod animation
+                
+                orbitConfigs.forEach((config, i) => {
+                    // Create circular path using EllipseCurve
+                    const curve = new THREE.EllipseCurve(
+                        0, 0,                    // center
+                        pathRadius, pathRadius,  // equal radii for circle
+                        0, 2 * Math.PI,         // full circle
+                        false,                   // clockwise
+                        0                        // rotation
+                    );
+                    
+                    // Store curve for pod animation
+                    this.orbitCurves.push(curve);
+                    
+                    const points = curve.getPoints(pathSegments);
+                    
+                    // Create TubeGeometry for thicker glow lines
+                    const tubeGeometry = new THREE.TubeGeometry(
+                        new THREE.CatmullRomCurve3(
+                            points.map(p => new THREE.Vector3(p.x, 0, p.y))
+                        ),
+                        pathSegments,
+                        tubeRadius,
+                        tubeSegments,
+                        true // closed
+                    );
+                    
+                    const material = new THREE.MeshBasicMaterial({
+                        color: 0x38E1FF,
+                        transparent: true,
+                        opacity: 0.5,
+                        blending: THREE.AdditiveBlending,
+                        emissive: new THREE.Color(0x38E1FF),
+                        emissiveIntensity: 0.2
+                    });
+                    
+                    const tube = new THREE.Mesh(tubeGeometry, material);
+                    tube.name = config.name;
+                    
+                    // Apply specific rotations for exact reference match
+                    tube.rotation.set(config.rotation.x, config.rotation.y, config.rotation.z);
+                    
+                    this.orbitalPaths.push(tube);
+                    this.constellation.add(tube);
+                    
+                    // Create orbital group for pods with same rotation
+                    const orbitalGroup = new THREE.Group();
+                    orbitalGroup.name = `${config.name}_Group`;
+                    orbitalGroup.rotation.copy(tube.rotation);
+                    this.orbitalGroups.push(orbitalGroup);
+                    this.constellation.add(orbitalGroup);
+                });
+            }
+
+            /**
+             * Create six orbiting pods with exact phase offsets
+             */
+            async createPods() {
+                const podGeometry = new THREE.SphereGeometry(0.12, 32, 32);
+                
+                // Exact phase offsets for each orbit as specified
+                const orbitPhases = [
+                    [0.0, 0.5],   // Orbit A
+                    [0.2, 0.7],   // Orbit B  
+                    [0.35, 0.85]  // Orbit C
+                ];
+                
+                for (let orbitIndex = 0; orbitIndex < 3; orbitIndex++) {
+                    for (let podIndex = 0; podIndex < 2; podIndex++) {
+                        // Deep teal body with subtle magenta rimlight
+                        const material = new THREE.MeshBasicMaterial({
+                            color: 0x1A5F5F, // Deep teal body
+                            emissive: new THREE.Color(0x4A2F5F), // Subtle magenta rim
+                            emissiveIntensity: 0.25
+                        });
+                        
+                        const pod = new THREE.Mesh(podGeometry, material);
+                        pod.name = `Pod_${orbitIndex}_${podIndex}`;
+                        
+                        // Store animation data
+                        pod.userData = {
+                            orbitIndex: orbitIndex,
+                            podIndex: podIndex,
+                            t: orbitPhases[orbitIndex][podIndex], // Exact phase offset
+                            orbitSpeed: 1 / 13, // ~13 seconds per orbit
+                            curve: this.orbitCurves[orbitIndex]
+                        };
+                        
+                        // Initial position using getPointAt
+                        const point = pod.userData.curve.getPointAt(pod.userData.t % 1);
+                        pod.position.set(point.x, 0, point.y);
+                        
+                        this.pods.push(pod);
+                        this.orbitalGroups[orbitIndex].add(pod);
+                    }
+                }
+            }
+
+            /**
+             * Create CSS2D labels with outward normal offset
+             */
+            createLabels() {
+                this.pods.forEach((pod, index) => {
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'hotspot-label';
+                    labelDiv.textContent = `HOTSPOT ${index + 1}`;
+                    labelDiv.style.fontSize = '12px';
+                    labelDiv.style.fontWeight = '600';
+                    labelDiv.style.color = 'white';
+                    labelDiv.style.textShadow = '0 0 6px rgba(255, 255, 255, 0.6)';
+                    labelDiv.style.pointerEvents = 'none';
+                    labelDiv.style.userSelect = 'none';
+                    
+                    const label = new CSS2DObject(labelDiv);
+                    label.name = `Label_${index + 1}`;
+                    
+                    // Calculate outward normal offset from pod center
+                    const podWorldPos = new THREE.Vector3();
+                    pod.getWorldPosition(podWorldPos);
+                    const normalizedPos = podWorldPos.clone().normalize();
+                    
+                    // Small outward offset along normal
+                    label.position.copy(normalizedPos.multiplyScalar(0.18));
+                    
+                    this.labels.push(label);
+                    pod.add(label); // Parent to pod for stable tracking
+                });
+            }
+
+            /**
+             * Set up event listeners for controls and resize
+             */
+            setupEventListeners() {
+                // Resize handler
+                window.addEventListener('resize', () => this.handleResize());
+                
+                // Control buttons
+                document.getElementById('pauseBtn').addEventListener('click', () => {
+                    this.togglePause();
+                });
+                
+                document.getElementById('resetBtn').addEventListener('click', () => {
+                    this.resetView();
+                });
+                
+                // Keyboard controls
+                document.addEventListener('keydown', (event) => {
+                    switch(event.code) {
+                        case 'Space':
+                            event.preventDefault();
+                            this.togglePause();
+                            break;
+                        case 'KeyR':
+                            this.resetView();
+                            break;
+                    }
+                });
+            }
+
+            /**
+             * Handle window resize
+             */
+            handleResize() {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                
+                this.camera.aspect = width / height;
+                this.camera.updateProjectionMatrix();
+                
+                this.renderer.setSize(width, height);
+                this.labelRenderer.setSize(width, height);
+                this.composer.setSize(width, height);
+            }
+
+            /**
+             * Toggle animation pause
+             */
+            togglePause() {
+                this.isPaused = !this.isPaused;
+                const btn = document.getElementById('pauseBtn');
+                btn.textContent = this.isPaused ? 'Resume' : 'Pause';
+                
+                if (!this.isPaused) {
+                    this.clock.start();
+                }
+            }
+
+            /**
+             * Reset camera view to initial position
+             */
+            resetView() {
+                const preset = this.cameraPresets[this.currentCameraPreset];
+                if (preset) {
+                    this.camera.position.set(...preset.position);
+                    this.camera.lookAt(0, 0, 0);
+                    this.controls.update();
+                }
+            }
+
+            /**
+             * Set up dat.GUI controls for camera, model tilt, and bloom parameters
+             */
+            setupGUI() {
+                this.gui = new dat.GUI({ width: 320 });
+                this.gui.domElement.style.position = 'absolute';
+                this.gui.domElement.style.top = '80px';
+                this.gui.domElement.style.right = '20px';
+                this.gui.domElement.style.zIndex = '1000';
+                
+                // Camera Controls
+                const cameraFolder = this.gui.addFolder('Camera Angles');
+                
+                const cameraControls = {
+                    preset: this.currentCameraPreset,
+                    'Reset View': () => this.resetView()
+                };
+                
+                cameraFolder.add(cameraControls, 'preset', Object.keys(this.cameraPresets)).onChange((presetName) => {
+                    this.switchCameraPreset(presetName);
+                });
+                
+                cameraFolder.add(cameraControls, 'Reset View');
+                cameraFolder.open();
+                
+                // Model Tilt Controls
+                const tiltFolder = this.gui.addFolder('Model Tilt');
+                
+                tiltFolder.add(this.modelTilt, 'x', -45, 45, 1).onChange((value) => {
+                    this.updateModelTilt();
+                }).name('Tilt X (°)');
+                
+                tiltFolder.add(this.modelTilt, 'y', -45, 45, 1).onChange((value) => {
+                    this.updateModelTilt();
+                }).name('Tilt Y (°)');
+                
+                tiltFolder.add(this.modelTilt, 'z', -45, 45, 1).onChange((value) => {
+                    this.updateModelTilt();
+                }).name('Tilt Z (°)');
+                
+                const tiltControls = {
+                    'Reset Tilt': () => this.resetModelTilt()
+                };
+                
+                tiltFolder.add(tiltControls, 'Reset Tilt');
+                tiltFolder.open();
+                
+                // Bloom Settings
+                const bloomFolder = this.gui.addFolder('Bloom Settings');
+                
+                const bloomParams = {
+                    threshold: 0.18,
+                    strength: 0.8,
+                    radius: 0.45
+                };
+                
+                bloomFolder.add(bloomParams, 'threshold', 0.0, 1.0, 0.01).onChange((value) => {
+                    this.bloomPass.threshold = value;
+                });
+                
+                bloomFolder.add(bloomParams, 'strength', 0.0, 3.0, 0.1).onChange((value) => {
+                    this.bloomPass.strength = value;
+                });
+                
+                bloomFolder.add(bloomParams, 'radius', 0.0, 1.0, 0.01).onChange((value) => {
+                    this.bloomPass.radius = value;
+                });
+                
+                // Hide GUI on mobile
+                if (window.innerWidth < 768) {
+                    this.gui.domElement.style.display = 'none';
+                }
+            }
+            
+            /**
+             * Switch to a camera preset
+             */
+            switchCameraPreset(presetName) {
+                const preset = this.cameraPresets[presetName];
+                if (preset) {
+                    this.currentCameraPreset = presetName;
+                    this.camera.position.set(...preset.position);
+                    this.camera.lookAt(0, 0, 0);
+                    this.controls.update();
+                }
+            }
+            
+            /**
+             * Update model tilt based on GUI controls
+             */
+            updateModelTilt() {
+                this.constellation.rotation.x = THREE.MathUtils.degToRad(this.modelTilt.x);
+                this.constellation.rotation.y = THREE.MathUtils.degToRad(this.modelTilt.y);
+                this.constellation.rotation.z = THREE.MathUtils.degToRad(this.modelTilt.z);
+            }
+            
+            /**
+             * Reset model tilt to default
+             */
+            resetModelTilt() {
+                this.modelTilt.x = 0;
+                this.modelTilt.y = 0;
+                this.modelTilt.z = 0;
+                this.updateModelTilt();
+                
+                // Update GUI display
+                this.gui.updateDisplay();
+            }
+
+            /**
+             * Main animation loop
+             */
+            animate() {
+                if (!this.isAnimating) return;
+                
+                requestAnimationFrame(() => this.animate());
+                
+                const currentTime = performance.now();
+                this.deltaTime = this.clock.getDelta();
+                
+                // Respect reduced motion preference
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                
+                if (!this.isPaused && !prefersReducedMotion) {
+                    this.updateAnimations();
+                }
+                
+                this.controls.update();
+                this.render();
+                
+                // Performance monitoring
+                const frameTime = currentTime - this.lastFrameTime;
+                this.lastFrameTime = currentTime;
+            }
+
+            /**
+             * Update all animations with proper delta time
+             */
+            updateAnimations() {
+                const time = this.clock.getElapsedTime();
+                
+                // Check for reduced motion preference
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                
+                if (!prefersReducedMotion) {
+                    // Constellation group rotation (Y-axis only, ~20 second cycle)
+                    this.constellation.rotation.y += this.deltaTime * (Math.PI * 2) / 20;
+                    
+                    // Pod orbital motion using getPointAt with delta time
+                    this.pods.forEach((pod) => {
+                        const userData = pod.userData;
+                        
+                        // Advance t parameter with delta time
+                        userData.t += this.deltaTime * userData.orbitSpeed;
+                        userData.t = userData.t % 1; // Keep t in [0, 1] range
+                        
+                        // Get position on curve
+                        const point = userData.curve.getPointAt(userData.t);
+                        pod.position.set(point.x, 0, point.y);
+                        
+                        // Minimal local spin
+                        pod.rotation.y += this.deltaTime * 0.5;
+                    });
+                }
+                
+                // Core pulsing (gentle, 3 second cycle)
+                const pulseSpeed = (Math.PI * 2) / 3;
+                this.coreScale = 0.98 + 0.04 * (Math.sin(time * pulseSpeed) * 0.5 + 0.5);
+                if (this.centralCore) {
+                    this.centralCore.scale.setScalar(this.coreScale);
+                    // Update shader time uniform
+                    if (this.centralCore.material.uniforms) {
+                        this.centralCore.material.uniforms.time.value = time;
+                    }
+                }
+            }
+
+            /**
+             * Render the scene
+             */
+            render() {
+                this.composer.render();
+                this.labelRenderer.render(this.scene, this.camera);
+            }
+
+            /**
+             * Cleanup and destroy the constellation
+             */
+            destroy() {
+                this.isAnimating = false;
+                
+                if (this.controls) {
+                    this.controls.dispose();
+                }
+                
+                if (this.renderer) {
+                    this.renderer.dispose();
+                }
+                
+                if (this.labelRenderer) {
+                    this.labelRenderer.domElement.remove();
+                }
+                
+                if (this.gui) {
+                    this.gui.destroy();
+                }
+            }
+        }
+
+        // Initialize the constellation when the page loads
+        let constellation;
+        
+        window.addEventListener('load', () => {
+            constellation = new OrbitalConstellation();
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (constellation) {
+                constellation.destroy();
+            }
+        });
+
+        // Add accessibility support
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add ARIA labels
+            document.getElementById('pauseBtn').setAttribute('aria-label', 'Pause or resume constellation animation');
+            document.getElementById('resetBtn').setAttribute('aria-label', 'Reset camera view to initial position');
+            
+            // Add keyboard navigation info
+            const infoDiv = document.createElement('div');
+            infoDiv.style.position = 'absolute';
+            infoDiv.style.bottom = '20px';
+            infoDiv.style.left = '20px';
+            infoDiv.style.color = 'rgba(255, 255, 255, 0.6)';
+            infoDiv.style.fontSize = '12px';
+            infoDiv.innerHTML = 'Controls: Mouse to orbit • Scroll to zoom • Space to pause • R to reset';
+            document.body.appendChild(infoDiv);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank you for contacting {{siteName}}</title>
+  <style>
+    body { margin:0; padding:0; background:#f5f7fb; -webkit-font-smoothing:antialiased; }
+    table { border-collapse:collapse; }
+
+    .wrapper { width:100%; background:#f5f7fb; padding:24px 0; }
+    .container { width:100%; max-width:640px; margin:0 auto; background:#ffffff; border:1px solid #e8eef5; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(19,41,77,0.06); }
+
+    .header { padding:20px 24px; background:#ffffff; border-bottom:1px solid #eef3f9; }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .brand-logo { width:28px; height:28px; background:linear-gradient(90deg,#2563eb,#06b6d4); border-radius:6px; }
+    .brand-name { font:800 24px/1.2 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#0f172a; }
+    /* Animated gradient text to match site navbar */
+    .gradient-text-animated {
+      background: linear-gradient(45deg, #ffffff, #06b6d4, #3b82f6, #ffffff);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: gradient-shift 3s ease infinite;
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .content { padding:24px; font:400 15px/1.7 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#0f172a; }
+    .title { font-weight:700; font-size:20px; margin:0 0 8px 0; }
+    .muted { color:#64748b; }
+
+    .cta { padding:16px 24px 24px 24px; }
+    .btn { display:inline-block; padding:12px 18px; background:linear-gradient(90deg,#2563eb,#06b6d4); color:#ffffff !important; text-decoration:none; border-radius:10px; font:600 14px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+
+    .footer { padding:16px 24px 24px 24px; color:#64748b; font:400 12px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; border-top:1px solid #eef3f9; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="brand">
+          <div class="brand-logo"></div>
+          <div class="brand-name"><span class="gradient-text-animated">{{siteName}}</span></div>
+        </div>
+      </div>
+      <div class="content">
+        <h2 class="title">Thank you for contacting {{siteName}}!</h2>
+        <p class="muted">Hi {{fullName}},</p>
+        <p class="muted">We've received your message and our team will get back to you shortly. In the meantime, feel free to reply to this email with any additional details.</p>
+      </div>
+      <div class="cta">
+        <a class="btn" href="mailto:{{FROM_EMAIL}}">Reply</a>
+      </div>
+      <div class="footer">
+        © {{year}} {{siteName}} · All rights reserved
+      </div>
+    </div>
+  </div>
+</body>
+</html>

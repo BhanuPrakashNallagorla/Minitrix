@@ -1,0 +1,113 @@
+Own Your AI. Protect Your Data. Scale Without Limits.
+
+Transform your AI strategy with purpose-built Small Language Models that deliver enterprise-grade results at a fraction of the cost.
+
+The Smart Alternative to Expensive LLM APIs
+
+KEY METRICS:
+- 80% Cost Reduction
+- 3x Faster Performance  
+- 100% Data Privacy
+
+COMPANY OVERVIEW:
+Minitrix specializes in building custom, on-premise Small Language Models (SLMs) that deliver unparalleled accuracy, speed, and security, fine-tuned on your unique enterprise data. We transform AI from a recurring expense into a strategic competitive advantage.
+
+WHY CHOOSE OUR SLMS:
+
+Saves Cost
+60-80% reduction in AI operational expenses
+Eliminate expensive API calls and reduce infrastructure costs with our efficient SLMs that deliver the same quality at a fraction of the price.
+$2M+ Annual Savings - 80% Cost Reduction
+
+Security
+Your data never leaves your infrastructure
+Deploy on-premises or in your private cloud. Complete data sovereignty with enterprise-grade security and compliance.
+100% Data Privacy - 0 Data Breaches
+
+High Performance
+3x faster inference with domain-specific optimization
+Optimized architectures and specialized training deliver lightning-fast responses without compromising accuracy.
+< 50ms Response - 3x Faster
+
+Customizable
+Tailored AI models built for your specific use cases
+Fine-tuned models trained on your domain data, understanding your business context and terminology.
+Industry Specific - 95% Accuracy
+
+Ownership
+Deploy once, use forever - no usage fees
+Own your AI infrastructure completely. No per-token charges, no usage limits, no vendor lock-in.
+Zero Usage Fees - ∞ Usage Limit
+
+LLM to SLM
+Seamless migration from expensive LLM providers
+Smooth transition with compatibility layers and migration tools. Maintain functionality while cutting costs.
+48hr Migration - 48h Migration Time
+
+COMPARISON: WHY SMART COMPANIES CHOOSE SLMS OVER LLMS
+
+Cost Model: Traditional LLMs use pay per token ($0.03-0.12/1K) vs Our Custom SLMs use one-time investment
+Data Privacy: Traditional LLMs use external servers (risk) vs Our Custom SLMs use your infrastructure (secure)
+Performance: Traditional LLMs provide generic responses vs Our Custom SLMs provide domain-optimized (3x faster)
+Scaling Costs: Traditional LLMs have exponential growth vs Our Custom SLMs have fixed operational cost
+Response Time: Traditional LLMs take 2-5 seconds vs Our Custom SLMs take 50-200ms average
+Accuracy: Traditional LLMs achieve 70-85% domain tasks vs Our Custom SLMs achieve 90-98% specialized tasks
+Customization: Traditional LLMs offer limited prompting only vs Our Custom SLMs offer full model training & fine-tuning
+
+KEY BENEFITS:
+- 60-80% reduction in AI operational expenses
+- Complete data sovereignty with on-premise deployment
+- 3x faster inference times
+- 90-98% accuracy on specialized tasks
+- Zero usage fees after deployment
+- Seamless migration from LLM providers in 48 hours
+
+CLIENT TESTIMONIALS:
+
+"Minitrix transformed our AI strategy completely. We reduced our operational costs by 75% while maintaining the same quality of results. The migration was seamless and their team provided exceptional support throughout the process."
+- Sarah Chen, CTO, TechFlow Dynamics
+75% cost reduction, 2x faster deployment
+
+"The level of customization and data security that Minitrix provides is unmatched. Having our AI models deployed on-premises gives us complete control over our sensitive data while delivering enterprise-grade performance."
+- Michael Rodriguez, Head of AI, SecureData Corp
+100% data privacy, 48hr migration
+
+PROVEN RESULTS ACROSS INDUSTRIES:
+
+Healthcare Provider - HIPAA-Compliant AI Transformation
+Major healthcare network replaced expensive LLM APIs with custom SLMs for patient data analysis
+- 75% Cost Reduction
+- HIPAA Compliance
+- 6 weeks Implementation
+Result: Achieved full regulatory compliance while reducing AI operational costs by $1.8M annually
+
+Financial Services - Real-time Fraud Detection
+Investment firm deployed specialized SLMs for transaction monitoring and risk assessment
+- 60% faster Response Time
+- 94.5% Accuracy
+- 340% ROI
+Result: Improved fraud detection accuracy while maintaining strict regulatory standards
+
+E-commerce Platform - Personalized Shopping Experience
+Online retailer implemented SLMs for product recommendations and customer service automation
+- $2M Annual Savings
+- 40% Accuracy Boost
+- 95% Customer Satisfaction
+Result: Increased conversion rates by 35% while dramatically reducing AI infrastructure costs
+
+Manufacturing - Predictive Maintenance System
+Global manufacturer deployed SLMs for equipment monitoring and predictive maintenance scheduling
+- 65% Downtime Reduction
+- -$3.2M Maintenance Costs
+- 28% Efficiency Gain
+Result: Eliminated unexpected equipment failures while reducing maintenance costs by over $3M annually
+
+Logistics & Supply Chain - Smart Route Optimization
+Transportation company implemented SLMs for dynamic route planning and delivery optimization
+- 45% Fuel Savings
+- +30% Delivery Speed
+- 4.9/5 Customer Rating
+Result: Optimized delivery routes resulting in 45% fuel savings and 30% faster delivery times
+
+TRUSTED COMPANIES:
+Leading organizations across industries trust Minitrix for their AI transformation needs.
